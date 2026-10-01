@@ -5,6 +5,7 @@ import { gsap, prefersReducedMotion } from "@/lib/gsap";
 import { onReveal } from "./ScoopLoader";
 import { Scripted } from "./Heading";
 import { hero } from "../content";
+import Magnetic from "./Magnetic";
 
 /**
  * H5: a giant "MELT" behind a big three-scoop cone on a soft pink blob, toppings drifting around it.
@@ -99,12 +100,16 @@ export default function MeltHero() {
             </span>
           </p>
           <div className="flex gap-2.5 md:gap-3">
-            <a href={hero.ctas[0].href} className="btn btn-solid">
-              {hero.ctas[0].label}
-            </a>
-            <a href={hero.ctas[1].href} className="btn btn-outline">
-              {hero.ctas[1].label}
-            </a>
+            <Magnetic>
+              <a href={hero.ctas[0].href} className="btn btn-solid">
+                {hero.ctas[0].label}
+              </a>
+            </Magnetic>
+            <Magnetic>
+              <a href={hero.ctas[1].href} className="btn btn-outline">
+                {hero.ctas[1].label}
+              </a>
+            </Magnetic>
           </div>
         </div>
       </div>

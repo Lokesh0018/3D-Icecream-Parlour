@@ -2,6 +2,8 @@ import DripEdge from "./DripEdge";
 import Heading from "./Heading";
 import Photo from "./Photo";
 import { deals } from "../content";
+import { addToOrder } from "./ScoopNav";
+import Magnetic from "./Magnetic";
 
 /** A round sticker with its text running around the edge, slowly spinning. */
 function Badge({ text, className = "" }: { text: string; className?: string }) {
@@ -61,10 +63,13 @@ export default function SweetDeals() {
                 <h3 className="font-display text-[clamp(30px,3vw,48px)]">{family.title}</h3>
                 <p className="mt-2 max-w-[360px] text-[15px] text-muted md:text-[16px]">{family.text}</p>
               </div>
-              <p className="shrink-0 text-right">
+              <div className="shrink-0 text-right flex flex-col items-end">
                 <span className="block text-[14px] font-bold text-muted line-through">{family.was}</span>
                 <span className="font-display tnum text-[clamp(36px,3.4vw,54px)] text-accent">{family.price}</span>
-              </p>
+                <Magnetic>
+                  <button onClick={(e) => { e.preventDefault(); addToOrder(); }} className="btn btn-solid mt-2 py-2 px-4 text-[10px]">Add to order</button>
+                </Magnetic>
+              </div>
             </div>
           </article>
 
@@ -79,7 +84,12 @@ export default function SweetDeals() {
                 <h3 className="font-display mt-3 text-[clamp(26px,2.3vw,36px)]">{date.title}</h3>
                 <p className="mt-2 text-[15px] opacity-90">{date.text}</p>
               </div>
-              <p className="font-display tnum text-[clamp(32px,2.8vw,44px)]">{date.price}</p>
+              <div className="flex items-center justify-between mt-auto">
+                <p className="font-display tnum text-[clamp(32px,2.8vw,44px)]">{date.price}</p>
+                <Magnetic>
+                  <button onClick={(e) => { e.preventDefault(); addToOrder(); }} className="btn bg-white text-accent mt-2 py-2 px-4 text-[10px]">Add to order</button>
+                </Magnetic>
+              </div>
             </div>
           </article>
 

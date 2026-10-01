@@ -5,11 +5,13 @@ import Animations from "@/components/engine/Animations";
 import RecordMode from "@/components/engine/RecordMode";
 import SitePage from "@/site/Page";
 import { meta } from "@/site/site";
+import SEO from "@/site/components/SEO";
 
 // Engine (same for every site) + the site's own page from site/.
 export default function Home() {
   return (
     <>
+      <SEO />
       <Loader text={meta.loaderText ?? meta.name} enabled={meta.loader ?? true} />
       <SmoothScroll />
       <Animations />
