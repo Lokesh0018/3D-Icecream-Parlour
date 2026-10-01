@@ -49,7 +49,7 @@ export default function SweetDeals() {
           <p className="max-w-[320px] text-[17px] font-semibold leading-relaxed text-[#2b1233]/80">{deals.text}</p>
         </div>
 
-        <div data-reveal="stagger" className="mt-10 grid gap-4 md:mt-14 lg:h-[min(62vh,600px)] lg:grid-cols-4 lg:grid-rows-2 lg:gap-5">
+        <div data-reveal="stagger" className="mt-10 grid gap-4 md:mt-14 lg:min-h-[min(62vh,600px)] lg:grid-cols-4 lg:grid-rows-2 lg:gap-5">
           {/* big: family tub night */}
           <article className="relative flex flex-col overflow-hidden rounded-[36px] bg-white lg:col-span-2 lg:row-span-2">
             <Badge text={family.badge} className="top-5 right-5" />
