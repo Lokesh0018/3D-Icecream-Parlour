@@ -46,10 +46,16 @@ export default function Cursor() {
       const interactive = t.closest("a, button, [data-magnetic]");
       setLabel(labelled?.dataset.cursor || "");
       gsap.to(ring.current, {
-        scale: labelled ? 2.6 : interactive ? 1.7 : 1,
+        scale: labelled ? 2.8 : interactive ? 1.7 : 1,
         backgroundColor: labelled ? "var(--accent)" : "rgba(0,0,0,0)",
+        borderWidth: labelled ? 0 : 1,
         duration: 0.4,
-        ease: "power3.out",
+        ease: "back.out(1.5)",
+      });
+      gsap.to(dot.current, {
+        opacity: (labelled || !shown) ? 0 : 1,
+        scale: interactive && !labelled ? 0.5 : 1,
+        duration: 0.3
       });
     };
     window.addEventListener("pointermove", move);
@@ -63,8 +69,12 @@ export default function Cursor() {
   if (!enabled) return null;
   return (
     <div className="cursor-layer pointer-events-none fixed inset-0 z-[90] [html.is-recording_&]:hidden" aria-hidden>
-      <div ref={ring} className="absolute -left-[18px] -top-[18px] flex h-9 w-9 opacity-0 items-center justify-center rounded-full border border-accent">
-        <span className="text-[5px] uppercase tracking-[0.2em] text-accent-fg">{label}</span>
+      <div ref={ring} className="absolute -left-[18px] -top-[18px] flex h-9 w-9 opacity-0 items-center justify-center rounded-full border border-accent overflow-hidden shadow-sm">
+        <span 
+          className={`text-[5px] uppercase tracking-[0.2em] font-bold text-accent-fg transition-all duration-300 flex items-center justify-center ${label ? "opacity-100 scale-100" : "opacity-0 scale-50"}`}
+        >
+          {label === "Add" ? <span className="text-[12px] pb-[1px] leading-none">+</span> : label}
+        </span>
       </div>
       <div ref={dot} className="absolute -left-[3px] -top-[3px] h-1.5 w-1.5 rounded-full bg-accent opacity-0" />
     </div>
