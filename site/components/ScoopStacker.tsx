@@ -52,7 +52,8 @@ export default function ScoopStacker() {
               setDone(d);
               if (d && !ordered.current) {
                 ordered.current = true;
-                addToOrder();
+                const total = scoops.reduce((s, f) => s + f.price, 0);
+                addToOrder({ id: "custom-cone", name: "Custom Built Cone", price: total });
               }
             },
           },

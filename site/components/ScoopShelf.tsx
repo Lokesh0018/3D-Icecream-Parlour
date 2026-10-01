@@ -1,6 +1,8 @@
 import DripEdge from "./DripEdge";
 import Heading from "./Heading";
 import { flavours, shelf } from "../content";
+import { addToOrder } from "./ScoopNav";
+import { gsap } from "@/lib/gsap";
 
 /** ProductGrid → capsule cards: each flavour in its own colour, round top, the scoop sitting in the dome, price in a white pill. */
 export default function ScoopShelf() {
@@ -44,7 +46,46 @@ export default function ScoopShelf() {
                   <span className="rounded-full bg-white px-3 py-2 text-[14px] font-extrabold text-[#2b1233] md:px-4 md:text-[16px]">
                     <span className="tnum">₹{f.price}</span> <span className="hidden font-bold text-muted sm:inline">{shelf.unit}</span>
                   </span>
-                  <button aria-label={`Add ${f.name}`} className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-accent text-[22px] leading-none font-bold text-white shadow-[0_4px_0_var(--accent-deep)] transition-transform hover:translate-y-[2px] md:h-12 md:w-12">
+                  <button 
+                    onClick={(e) => {
+                      if (!addToOrder({ id: f.id, name: f.name, price: f.price })) return;
+                      const btn = e.currentTarget;
+                      const card = btn.closest("article");
+                      if (!card) return;
+                      const img = card.querySelector("img");
+                      const cart = document.getElementById("cart-button");
+                      if (!img || !cart) return;
+
+                      const imgRect = img.getBoundingClientRect();
+                      const cartRect = cart.getBoundingClientRect();
+
+                      const clone = img.cloneNode(true) as HTMLImageElement;
+                      clone.style.position = "fixed";
+                      clone.style.left = `${imgRect.left}px`;
+                      clone.style.top = `${imgRect.top}px`;
+                      clone.style.width = `${imgRect.width}px`;
+                      clone.style.height = `${imgRect.height}px`;
+                      clone.style.zIndex = "9999";
+                      clone.style.pointerEvents = "none";
+                      clone.style.transition = "none";
+                      clone.style.transform = "none";
+                      document.body.appendChild(clone);
+
+                      gsap.to(clone, {
+                        x: cartRect.left - imgRect.left + cartRect.width / 2 - imgRect.width / 2,
+                        y: cartRect.top - imgRect.top + cartRect.height / 2 - imgRect.height / 2,
+                        scale: 0.1,
+                        opacity: 0.5,
+                        duration: 0.8,
+                        ease: "power2.inOut",
+                        onComplete: () => {
+                          clone.remove();
+                        }
+                      });
+                    }}
+                    aria-label={`Add ${f.name}`} 
+                    className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-accent text-[22px] leading-none font-bold text-white shadow-[0_4px_0_var(--accent-deep)] transition-transform hover:translate-y-[2px] md:h-12 md:w-12"
+                  >
                     +
                   </button>
                 </div>

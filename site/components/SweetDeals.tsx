@@ -67,7 +67,7 @@ export default function SweetDeals() {
                 <span className="block text-[14px] font-bold text-muted line-through">{family.was}</span>
                 <span className="font-display tnum text-[clamp(36px,3.4vw,54px)] text-accent">{family.price}</span>
                 <Magnetic>
-                  <button onClick={(e) => { e.preventDefault(); addToOrder(); }} className="btn btn-solid mt-2 py-2 px-4 text-[10px]">Add to order</button>
+                  <button onClick={(e) => { e.preventDefault(); addToOrder({ id: family.title, name: family.title, price: parseInt(family.price.replace(/[^0-9]/g, "")) }); }} className="btn btn-solid mt-2 py-2 px-4 text-[10px]">Add to order</button>
                 </Magnetic>
               </div>
             </div>
@@ -87,7 +87,7 @@ export default function SweetDeals() {
               <div className="flex items-center justify-between mt-auto">
                 <p className="font-display tnum text-[clamp(32px,2.8vw,44px)]">{date.price}</p>
                 <Magnetic>
-                  <button onClick={(e) => { e.preventDefault(); addToOrder(); }} className="btn bg-white text-accent mt-2 py-2 px-4 text-[10px]">Add to order</button>
+                  <button onClick={(e) => { e.preventDefault(); addToOrder({ id: date.title, name: date.title, price: parseInt(date.price.replace(/[^0-9]/g, "")) }); }} className="btn bg-white text-accent mt-2 py-2 px-4 text-[10px]">Add to order</button>
                 </Magnetic>
               </div>
             </div>
