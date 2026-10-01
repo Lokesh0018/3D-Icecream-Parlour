@@ -45,6 +45,11 @@ export const removeFromOrder = (index: number) => {
   window.dispatchEvent(new Event("melt:order"));
 };
 
+export const clearOrder = () => {
+  globalCart.splice(0, globalCart.length);
+  window.dispatchEvent(new Event("melt:order"));
+};
+
 /** The brand mark: a tiny scoop on a cone. */
 export const ScoopMark = ({ className = "h-[1em] w-auto" }: { className?: string }) => (
   <svg viewBox="0 0 20 26" className={className} aria-hidden>

@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { gsap, prefersReducedMotion } from "@/lib/gsap";
 import { onSiteReady } from "@/lib/loading";
 import Heading from "./Heading";
-import { addToOrder } from "./ScoopNav";
-import { builder } from "../content";
+import { addToOrder, getCart, clearOrder } from "./ScoopNav";
+import { builder, flavours, Flavour } from "../content";
 
 // Scroll progress (0..1 of the pinned stretch) where scoop k starts to drop, and how long the drop + squish take.
 const dropAt = (k: number) => 0.1 + k * 0.26;
@@ -20,13 +20,31 @@ const DONE = 0.9;
  */
 export default function ScoopStacker() {
   const root = useRef<HTMLElement>(null);
+  const stackRef = useRef<HTMLDivElement>(null);
   const drops = useRef<(HTMLDivElement | null)[]>([]);
   const squish = useRef<(HTMLImageElement | null)[]>([]);
   const [n, setN] = useState(0); // scoops landed
   const [done, setDone] = useState(false);
+  const [buying, setBuying] = useState(false);
+  const [delivered, setDelivered] = useState(false);
   const [still, setStill] = useState(false);
   const ordered = useRef(false);
-  const { scoops } = builder;
+  
+  const [scoops, setScoops] = useState<Flavour[]>(builder.scoops);
+
+  useEffect(() => {
+    const onOrder = () => {
+      const cart = getCart();
+      const scoopsInCart = cart
+        .map(item => flavours.find(f => f.id === item.id))
+        .filter(Boolean) as Flavour[];
+      setScoops(scoopsInCart);
+      ordered.current = false; // Reset ordered state so it can be ordered again if needed
+    };
+    window.addEventListener("melt:order", onOrder);
+    onOrder();
+    return () => window.removeEventListener("melt:order", onOrder);
+  }, []);
 
   useEffect(() => {
     if (prefersReducedMotion()) {
@@ -48,12 +66,13 @@ export default function ScoopStacker() {
             onUpdate: (self) => {
               const p = self.progress;
               setN(scoops.filter((_, k) => p >= dropAt(k) + FALL).length);
-              const d = p >= DONE;
+              const d = scoops.length > 0 && p >= DONE;
               setDone(d);
               if (d && !ordered.current) {
-                ordered.current = true;
-                const total = scoops.reduce((s, f) => s + f.price, 0);
-                addToOrder({ id: "custom-cone", name: "Custom Built Cone", price: total });
+                // Not adding to order here anymore since these scoops are already in the order!
+                // ordered.current = true;
+                // const total = scoops.reduce((s, f) => s + f.price, 0);
+                // addToOrder({ id: "custom-cone", name: "Custom Built Cone", price: total });
               }
             },
           },
@@ -71,6 +90,48 @@ export default function ScoopStacker() {
       ctx?.revert();
     };
   }, [scoops]);
+
+  const handleBuy = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (!done || buying || delivered) return;
+
+    setBuying(true);
+    
+    // Delivery animation
+    if (stackRef.current) {
+      const tl = gsap.timeline({
+        onComplete: () => {
+          setDelivered(true);
+          clearOrder();
+          
+          // Reset animation state after a short delay
+          setTimeout(() => {
+            setBuying(false);
+            setDelivered(false);
+            gsap.set(stackRef.current, { y: 0, x: 0, scale: 1, rotation: 0, opacity: 1 });
+          }, 3000);
+        }
+      });
+      
+      tl.to(stackRef.current, { 
+        scale: 0.9, 
+        y: 20, 
+        duration: 0.25, 
+        ease: "power2.out" 
+      }).to(stackRef.current, {
+        y: -window.innerHeight * 0.8,
+        x: window.innerWidth * 0.1,
+        scale: 0.4,
+        rotation: 15,
+        opacity: 0,
+        duration: 0.7,
+        ease: "back.in(1.5)"
+      });
+    } else {
+      clearOrder();
+      setDelivered(true);
+    }
+  };
 
   const total = scoops.slice(0, n).reduce((s, f) => s + f.price, 0);
 
@@ -104,7 +165,7 @@ export default function ScoopStacker() {
           </div>
 
           {/* centre: the stack */}
-          <div className="relative mx-auto h-[calc(var(--u)*4.3)] w-[calc(var(--u)*1.35)] [--u:min(11.5svh,104px)] lg:[--u:min(14.5vh,150px)]">
+          <div ref={stackRef} className="relative mx-auto h-[calc(var(--u)*4.3)] w-[calc(var(--u)*1.35)] [--u:min(11.5svh,104px)] lg:[--u:min(14.5vh,150px)]">
             <div aria-hidden className="absolute bottom-[-4%] left-1/2 h-[6%] w-[90%] -translate-x-1/2 rounded-[50%] bg-[#2b1233]/10 blur-md" />
             <img src={builder.cone} alt="Waffle cone" className="absolute bottom-0 left-1/2 z-[1] w-[calc(var(--u))] -translate-x-1/2" />
             {scoops.map((f, k) => (
@@ -155,9 +216,43 @@ export default function ScoopStacker() {
                 ₹{total}
               </span>
             </div>
-            <a href="#build" className={`btn mt-3 w-full justify-center lg:mt-5 ${done ? "btn-solid" : "btn-outline"}`}>
-              {done ? `Added to order ✓` : `${builder.cta} · ₹${total}`}
-            </a>
+            {scoops.length === 0 && !delivered ? (
+              <a href="#flavours" className="btn mt-3 w-full justify-center lg:mt-5 btn-outline">
+                Add scoops to see them here
+              </a>
+            ) : (
+              <button 
+                onClick={handleBuy} 
+                className={`btn mt-3 w-full justify-center flex items-center gap-2 lg:mt-5 transition-all duration-300 ease-out ${
+                  done && !buying && !delivered 
+                    ? "btn-solid hover:-translate-y-1 hover:shadow-lg cursor-pointer" 
+                    : "btn-outline opacity-80 cursor-not-allowed"
+                }`}
+                disabled={!done || buying || delivered}
+              >
+                {delivered ? (
+                  <>
+                    <svg className="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" /></svg>
+                    <span>Delivered!</span>
+                  </>
+                ) : buying ? (
+                  <>
+                    <svg className="w-5 h-5 animate-spin text-accent" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                    </svg>
+                    <span>Preparing...</span>
+                  </>
+                ) : done ? (
+                  <>
+                    <span>Buy now</span>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                  </>
+                ) : (
+                  `Building cone · ₹${total}`
+                )}
+              </button>
+            )}
           </div>
         </div>
       </div>
