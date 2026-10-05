@@ -30,14 +30,14 @@ export const nav = {
 
 export const hero = {
   word: "MELT",
-  pill: { label: "Flavour of the week", value: "Double ka Meetha" },
   heading: ["Small batch.", "*Big* feelings."],
   text: "Hand-churned in Hyderabad every morning, never more than 20 litres at a time. Real fruit, real milk, no shortcuts.",
   ctas: [
     { label: "Pick your scoop", href: "#flavours" },
     { label: "Find a parlour", href: "#parlours" },
   ],
-  cone: "/images/melt/cone-hero.webp",
+  cone: "/images/melt/hero-icecream.webp",
+  bg: "/images/melt/hero-bg.jpg",
   toppings: [
     { src: "/images/common/topping-strawberry.webp", alt: "", className: "left-[2%] top-[33%] w-[clamp(70px,10vw,170px)] rotate-[-12deg] md:left-[6%] md:top-[22%]", depth: 0.35 },
     { src: "/images/common/topping-pistachio.webp", alt: "", className: "right-[4%] top-[30%] w-[clamp(56px,7vw,120px)] rotate-[10deg] md:right-[9%] md:top-[18%]", depth: 0.55 },

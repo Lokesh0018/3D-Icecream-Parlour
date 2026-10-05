@@ -26,7 +26,6 @@ export const nav = {
 
 export const hero = {
   word: "BAKE",
-  pill: { label: "Cake of the week", value: "Dark Chocolate Truffle" },
   heading: ["Small Bakes.", "*Big* Moments."],
   text: "Baked fresh in Hyderabad every morning. Real butter, premium chocolate, no shortcuts.",
   ctas: [
@@ -34,6 +33,7 @@ export const hero = {
     { label: "Find a patisserie", href: "#parlours" },
   ],
   cone: "/images/bake/cake-hero.webp", // Would be a cake image
+  bg: "/images/melt/hero-bg.jpg", // Default to the same background for now, or you can supply another
   toppings: icecreamHero.toppings,
 };
 

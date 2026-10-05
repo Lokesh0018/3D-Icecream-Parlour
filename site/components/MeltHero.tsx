@@ -14,6 +14,8 @@ import Magnetic from "./Magnetic";
 export default function MeltHero() {
   const { hero } = useContent();
   const root = useRef<HTMLElement>(null);
+  const bgRef = useRef<HTMLImageElement>(null);
+  const icecreamRef = useRef<HTMLImageElement>(null);
   const left = useRef<HTMLSpanElement>(null);
   const right = useRef<HTMLSpanElement>(null);
   const cone = useRef<HTMLDivElement>(null);
@@ -36,26 +38,54 @@ export default function MeltHero() {
 
         // scroll: the word slides apart, the cone lifts
         const st = { trigger: root.current, start: "top top", end: "bottom top", scrub: true };
+        gsap.to(bgRef.current, { yPercent: 15, ease: "none", scrollTrigger: st });
         gsap.to(left.current, { xPercent: -18, ease: "none", scrollTrigger: st });
         gsap.to(right.current, { xPercent: 18, ease: "none", scrollTrigger: st });
         gsap.to(cone.current, { yPercent: -10, ease: "none", scrollTrigger: st });
+        gsap.to(icecreamRef.current, { yPercent: -20, ease: "none", scrollTrigger: st });
         (Array.from(toppings.current!.children) as HTMLElement[]).forEach((t) =>
           gsap.to(t, { yPercent: -120 * Number(t.dataset.depth), ease: "none", scrollTrigger: st }),
         );
       }, root);
     });
+
+    // Mouse movement parallax effect
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!root.current) return;
+      const { innerWidth, innerHeight } = window;
+      const x = (e.clientX / innerWidth) * 2 - 1;
+      const y = (e.clientY / innerHeight) * 2 - 1;
+
+      // Move elements based on cursor position
+      gsap.to(bgRef.current, { x: x * 15, y: y * 15, duration: 1, ease: "power2.out", overwrite: "auto" });
+      gsap.to(cone.current, { x: x * -25, y: y * -25, duration: 1, ease: "power2.out", overwrite: "auto" });
+      gsap.to([left.current, right.current], { x: x * -10, y: y * -10, duration: 1.2, ease: "power2.out", overwrite: "auto" });
+      
+      if (toppings.current) {
+        (Array.from(toppings.current.children) as HTMLElement[]).forEach((t) => {
+          const depth = Number(t.dataset.depth) || 0.5;
+          gsap.to(t, { x: x * depth * -60, y: y * depth * -60, duration: 1.5, ease: "power2.out", overwrite: "auto" });
+        });
+      }
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+
     return () => {
       off();
       ctx?.revert();
+      window.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
 
   return (
     <section ref={root} id="top" className="relative h-[100svh] min-h-[640px] overflow-hidden">
+      {/* Background Image with Parallax */}
+      <img ref={bgRef} src={hero.bg || "/images/melt/hero-bg.jpg"} alt="Background" className="absolute top-[-10%] left-0 w-full h-[120%] object-cover opacity-80" />
+
       <div aria-hidden data-record-label="Hero" data-record-time="0" data-record-hold="3" className="pointer-events-none absolute inset-x-0 top-0 h-px" />
 
-      {/* soft blob */}
-      <div aria-hidden className="blob absolute top-[50%] left-1/2 h-[min(76vh,86vw)] w-[min(76vh,86vw)] -translate-x-1/2 -translate-y-1/2 bg-[var(--strawberry)] opacity-70 md:top-[52%]" />
+      {/* soft blob (removed as replaced by background) */}
 
       {/* giant word */}
       <p aria-hidden className="font-display absolute inset-x-0 top-[17%] flex -translate-y-1/2 justify-center gap-[3vw] text-[clamp(96px,27vw,440px)] md:gap-[12vw] md:text-[clamp(150px,27vw,470px)] leading-none font-bold tracking-[-0.03em] text-accent select-none md:top-[45%]">
@@ -76,10 +106,10 @@ export default function MeltHero() {
         ))}
       </div>
 
-      {/* the cone */}
-      <div className="absolute top-[21%] left-1/2 h-[56%] -translate-x-1/2 md:top-[10%] md:h-[84%] flex justify-center">
-        <div ref={cone} style={{ viewTransitionName: 'hero-cone' }} className="h-full">
-          <img src={hero.cone} alt="A waffle cone with pistachio, strawberry and mango scoops" className="float-soft h-full w-auto drop-shadow-[0_30px_30px_rgba(120,20,60,.22)]" />
+      {/* the central image (16:9 image covering hero) */}
+      <div className="absolute inset-0 flex justify-center items-center z-10 pointer-events-none">
+        <div ref={cone} style={{ viewTransitionName: 'hero-cone' }} className="w-full h-full relative">
+          <img ref={icecreamRef} src={hero.cone} alt="3D center image" className="float-soft w-full h-full object-cover object-center drop-shadow-[0_30px_30px_rgba(120,20,60,.22)] scale-105" />
         </div>
       </div>
 
@@ -97,11 +127,6 @@ export default function MeltHero() {
         </div>
 
         <div ref={side} className="pointer-events-auto flex flex-col items-start gap-4 md:items-end">
-          <p className="eyebrow hidden whitespace-nowrap md:inline-flex" style={{ textTransform: "none", letterSpacing: "0.02em", fontSize: 13 }}>
-            <span>
-              {hero.pill.label}: <span className="text-fg">{hero.pill.value}</span>
-            </span>
-          </p>
           <div className="flex gap-2.5 md:gap-3">
             <Magnetic>
               <a href={hero.ctas[0].href} className="btn btn-solid">
