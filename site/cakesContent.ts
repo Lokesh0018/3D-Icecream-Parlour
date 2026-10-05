@@ -11,13 +11,13 @@ export const FLAVOUR = {
 };
 
 export const nav = {
-  logo: "Melt Theory Cakes",
+  logo: "Melt Theory",
   links: [
-    { label: "Signatures", href: "#flavours" },
-    { label: "Build a Cake", href: "#build" },
+    { label: "Flavours", href: "#flavours" },
+    { label: "Build a cake", href: "#build" },
     { label: "Treats", href: "#treats" },
     { label: "Deals", href: "#deals" },
-    { label: "Patisseries", href: "#parlours" },
+    { label: "Parlours", href: "#parlours" },
   ],
   cta: { label: "Order", href: "#build" },
 };
@@ -25,13 +25,13 @@ export const nav = {
 export const hero = {
   word: "BAKE",
   pill: { label: "Cake of the week", value: "Dark Chocolate Truffle" },
-  heading: ["Artisan baked.", "*Big* celebrations."],
+  heading: ["Small Bakes.", "*Big* Moments."],
   text: "Baked fresh in Hyderabad every morning. Real butter, premium chocolate, no shortcuts.",
   ctas: [
     { label: "Pick your cake", href: "#flavours" },
     { label: "Find a patisserie", href: "#parlours" },
   ],
-  cone: "/images/melt/cone-hero.webp", // Would be a cake image
+  cone: "/images/bake/cake-hero.webp", // Would be a cake image
   toppings: [], // Simplified for cakes
 };
 

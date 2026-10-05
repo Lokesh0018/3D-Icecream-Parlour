@@ -25,7 +25,10 @@ export default function FlavourWave() {
     if (prefersReducedMotion()) return;
     const len = (el: SVGTextPathElement, reps: number) => (el.parentNode as SVGTextElement).getComputedTextLength() / reps;
     let units = { top: 0, bottom: 0 };
-    const measure = () => (units = { top: len(topText.current!, REPS.top), bottom: len(bottomText.current!, REPS.bottom) });
+    const measure = () => {
+      if (!topText.current || !bottomText.current) return;
+      units = { top: len(topText.current, REPS.top), bottom: len(bottomText.current, REPS.bottom) };
+    };
     measure();
     document.fonts.ready.then(measure);
 
