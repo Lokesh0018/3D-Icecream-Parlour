@@ -58,6 +58,15 @@ export const ScoopMark = ({ className = "h-[1em] w-auto" }: { className?: string
   </svg>
 );
 
+/** The cake mark: a tiny cupcake. */
+export const CakeMark = ({ className = "h-[1em] w-auto" }: { className?: string }) => (
+  <svg viewBox="0 0 20 26" className={className} aria-hidden>
+    <rect x="4" y="14" width="12" height="10" rx="1.5" fill="#e9b170" />
+    <path d="M2 14 C2 8, 18 8, 18 14 C18 15.5, 15.33 15.5, 15.33 14 C15.33 15.5, 12.66 15.5, 12.66 14 C12.66 15.5, 10 15.5, 10 14 C10 15.5, 7.33 15.5, 7.33 14 C7.33 15.5, 4.66 15.5, 4.66 14 C4.66 15.5, 2 15.5, 2 14 Z" fill="currentColor" />
+    <circle cx="10" cy="5.5" r="2.5" fill="#d61c5d" />
+  </svg>
+);
+
 /** N2: one floating white pill (mark · links with a sliding pink blob · Order count). Phone: pill + full pink sheet. */
 export default function ScoopNav() {
   const { nav, isCake, toggleCake } = useContent();
@@ -131,9 +140,14 @@ export default function ScoopNav() {
         id="cart-button" 
         onClick={() => setCartOpen(!cartOpen)} 
         aria-label={`${nav.cta.label}, ${count} items`} 
-        className="flex items-center gap-2 rounded-full bg-accent py-2 pr-2 pl-4 text-[14px] font-extrabold text-accent-fg transition-transform hover:scale-[1.04] cursor-pointer"
+        className="flex items-center gap-1.5 rounded-full bg-accent py-1.5 px-1.5 md:py-2 md:pr-2 md:pl-4 text-[14px] font-extrabold text-accent-fg transition-transform hover:scale-[1.04] cursor-pointer"
       >
-        {nav.cta.label}
+        <span className="hidden md:inline">{nav.cta.label}</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="md:hidden ml-1">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+          <path d="M3 6h18"/>
+          <path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
         <span key={bump} className={`tnum grid h-7 min-w-7 place-items-center rounded-full bg-white px-1.5 text-[13px] text-accent ${bump ? "order-bump" : ""}`}>
           {count}
         </span>
@@ -179,8 +193,17 @@ export default function ScoopNav() {
     <>
       <header ref={ref} className="fixed inset-x-0 top-3 z-50 flex justify-center px-3 md:top-5">
         <div className="flex w-full max-w-[860px] items-center gap-2 rounded-full bg-white/95 p-1.5 pl-5 shadow-[0_14px_40px_-16px_rgba(120,20,60,.35)] md:w-full md:gap-4 transition-all duration-500">
-          <a href="#" aria-label="Scoop & Slice, home" className="font-display flex items-center gap-1.5 text-[22px] whitespace-nowrap text-accent md:text-[24px]">
-            <ScoopMark className="h-[1.05em] w-auto text-[#ff8fb1]" />
+          <a 
+            href="#" 
+            onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+            aria-label="Scoop & Slice, home" 
+            className="font-display flex items-center gap-1.5 text-[22px] whitespace-nowrap text-accent md:text-[24px] transition-transform hover:scale-[1.02]"
+          >
+            {isCake ? (
+              <CakeMark className="h-[1.05em] w-auto text-[#ff8fb1]" />
+            ) : (
+              <ScoopMark className="h-[1.05em] w-auto text-[#ff8fb1]" />
+            )}
             {nav.logo}
           </a>
           <nav className="relative hidden items-center lg:flex">
@@ -198,10 +221,10 @@ export default function ScoopNav() {
               </a>
             ))}
           </nav>
-          <div className="ml-auto flex items-center gap-2 md:gap-3">
+          <div className="ml-auto flex items-center gap-1.5 md:gap-3">
             <button 
               onClick={toggleCake} 
-              className="relative flex items-center h-8 w-14 rounded-full bg-accent/10 p-1 cursor-pointer transition-colors border border-accent/20"
+              className="relative flex items-center h-8 w-14 rounded-full bg-accent/10 p-1 cursor-pointer transition-colors border border-accent/20 shrink-0"
               aria-label="Toggle between Ice Cream and Cakes"
             >
               <div className={`absolute left-1 h-6 w-6 rounded-full bg-white shadow-sm flex items-center justify-center transition-transform duration-300 ease-[cubic-bezier(.22,1,.36,1)] ${isCake ? "translate-x-6" : "translate-x-0"}`}>
@@ -209,8 +232,12 @@ export default function ScoopNav() {
               </div>
             </button>
             {order}
-            <button onClick={() => setOpen(true)} className="rounded-full px-3.5 py-2.5 text-[14px] font-extrabold lg:hidden">
-              Menu
+            <button onClick={() => setOpen(true)} className="flex items-center justify-center rounded-full h-9 w-9 bg-black/5 text-fg transition-colors hover:bg-black/10 lg:hidden cursor-pointer shrink-0" aria-label="Open Menu">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="3" x2="21" y1="12" y2="12"/>
+                <line x1="3" x2="21" y1="6" y2="6"/>
+                <line x1="3" x2="21" y1="18" y2="18"/>
+              </svg>
             </button>
           </div>
         </div>
@@ -219,17 +246,34 @@ export default function ScoopNav() {
       {open && (
         <div className="fixed inset-0 z-[70] flex flex-col bg-[var(--strawberry)]">
           <div className="flex items-center justify-between px-6 pt-6">
-            <span className="font-display flex items-center gap-1.5 text-[24px] text-accent">
-              <ScoopMark className="h-[1.05em] w-auto text-white" />
+            <button 
+              onClick={() => { setOpen(false); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+              className="font-display flex items-center gap-1.5 text-[24px] text-accent cursor-pointer transition-transform hover:scale-[1.02]"
+            >
+              {isCake ? (
+                <CakeMark className="h-[1.05em] w-auto text-white" />
+              ) : (
+                <ScoopMark className="h-[1.05em] w-auto text-white" />
+              )}
               {nav.logo}
-            </span>
-            <button onClick={() => setOpen(false)} className="rounded-full bg-white px-4 py-2.5 text-[14px] font-extrabold">
-              Close
+            </button>
+            <button onClick={() => setOpen(false)} className="flex items-center justify-center rounded-full h-10 w-10 bg-white text-accent transition-transform hover:scale-105 cursor-pointer shadow-sm" aria-label="Close Menu">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
             </button>
           </div>
-          <nav className="flex flex-1 flex-col justify-center gap-2 px-6">
+          <nav className="flex flex-1 flex-col justify-center gap-4 px-6">
+            <a 
+              href="#" 
+              onClick={(e) => { e.preventDefault(); setOpen(false); window.scrollTo({ top: 0, behavior: "smooth" }); }} 
+              className="font-display text-[clamp(40px,11vw,64px)] leading-[1.1] text-fg transition-all hover:translate-x-2 hover:text-white"
+            >
+              Home
+            </a>
             {nav.links.map((l) => (
-              <a key={l.label} href={l.href} onClick={() => setOpen(false)} className="font-display text-[clamp(44px,12vw,72px)] leading-[1.05] text-fg">
+              <a key={l.label} href={l.href} onClick={() => setOpen(false)} className="font-display text-[clamp(40px,11vw,64px)] leading-[1.1] text-fg transition-all hover:translate-x-2 hover:text-white">
                 {l.label}
               </a>
             ))}

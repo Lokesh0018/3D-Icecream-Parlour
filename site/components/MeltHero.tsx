@@ -107,15 +107,15 @@ export default function MeltHero() {
       </div>
 
       {/* the central image (16:9 image covering hero) */}
-      <div className="absolute inset-0 flex justify-center items-center z-10 pointer-events-none">
-        <div ref={cone} style={{ viewTransitionName: 'hero-cone' }} className="w-full h-full relative flex items-center justify-center">
-          <img ref={icecreamRef} src={hero.cone} alt="3D center image" className={`float-soft object-cover object-center drop-shadow-[0_30px_30px_rgba(120,20,60,.22)] ${hero.imageClassName || "w-full h-full scale-105"}`} />
+      <div className="absolute inset-0 flex justify-center items-center z-10 pointer-events-none pt-[12vh] md:pt-0">
+        <div ref={cone} style={{ viewTransitionName: 'hero-cone' }} className="w-[90%] h-[70%] md:w-full md:h-full relative flex items-center justify-center">
+          <img ref={icecreamRef} src={hero.cone} alt="3D center image" className={`float-soft object-contain object-center drop-shadow-[0_30px_30px_rgba(120,20,60,.22)] ${hero.imageClassName || "w-full h-full md:scale-105"}`} />
         </div>
       </div>
 
       {/* copy, bottom left */}
-      <div className="container-x pointer-events-none absolute inset-x-0 bottom-[4%] flex flex-col gap-3 md:bottom-[7%] md:flex-row md:items-end md:justify-between">
-        <div ref={copy} className="pointer-events-auto max-w-[440px]">
+      <div className="container-x pointer-events-none absolute inset-x-0 bottom-[6%] flex flex-col gap-4 md:bottom-[7%] md:flex-row md:items-end md:justify-between z-20">
+        <div ref={copy} className="pointer-events-auto max-w-[440px] drop-shadow-md md:drop-shadow-none">
           <h1 className="font-display text-[clamp(46px,4.3vw,70px)]">
             {hero.heading.map((l, i) => (
               <span key={i} className="block" style={{ viewTransitionName: `hero-heading-${i}` }}>

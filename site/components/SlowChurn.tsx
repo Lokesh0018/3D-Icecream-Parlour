@@ -53,15 +53,12 @@ function usePour(folder: string, canvas: React.RefObject<HTMLCanvasElement | nul
       if (key === last) return;
       last = key;
       const { width: w, height: h } = cv;
-      // phone (a wide, short box): show ~94% of the frame width so the whole bowl fits, sitting on the bottom edge.
-      // laptop (a tall box): cover, with the crop following the scoop.
-      const wide = w / h > 1.25;
-      const s = wide ? w / (img.naturalWidth * 0.94) : Math.max(w / img.naturalWidth, h / img.naturalHeight);
+      const s = Math.max(w / img.naturalWidth, h / img.naturalHeight);
       const dw = img.naturalWidth * s;
       const dh = img.naturalHeight * s;
       const x = Math.min(0, Math.max(w - dw, w / 2 - focusAt(p, focusKeys) * dw));
       ctx.clearRect(0, 0, w, h);
-      ctx.drawImage(img, x, wide ? h - dh : (h - dh) / 2, dw, dh);
+      ctx.drawImage(img, x, (h - dh) / 2, dw, dh);
     };
 
     getManifest(folder)
@@ -169,8 +166,8 @@ export default function SlowChurn() {
               ))}
             </div>
 
-            {/* phone: under the stickers, the whole bowl in view · laptop: the right 64% of the panel */}
-            <canvas ref={canvas} role="img" aria-label={slow.alt} className="pour-canvas relative mt-6 block aspect-[16/9.6] w-full md:absolute md:inset-y-0 md:right-0 md:mt-0 md:aspect-auto md:h-full md:w-[64%]" />
+            {/* phone: flex-1 to fill remaining height, laptop: the right 64% of the panel */}
+            <canvas ref={canvas} role="img" aria-label={slow.alt} className="pour-canvas relative mt-6 block flex-1 w-full md:absolute md:inset-y-0 md:right-0 md:mt-0 md:h-full md:w-[64%]" />
           </div>
         </div>
       </div>

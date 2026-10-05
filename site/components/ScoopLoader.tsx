@@ -45,7 +45,7 @@ async function preloadAll() {
 }
 
 /** Scoop drop: a waffle cone on pink, a scoop drops in with a squish, the name pops up, then a circle opens from the cone. */
-export default function ScoopLoader({ name, cone, scoop }: { name: string; cone: string; scoop: string }) {
+export default function ScoopLoader({ name, cone, scoop, isCake }: { name: string; cone: string; scoop: string; isCake?: boolean }) {
   const root = useRef<HTMLDivElement>(null);
   const coneEl = useRef<HTMLImageElement>(null);
   const scoopEl = useRef<HTMLImageElement>(null);
@@ -55,7 +55,7 @@ export default function ScoopLoader({ name, cone, scoop }: { name: string; cone:
   useEffect(() => {
     // ?static=1: a class that stops the CSS loops (floats, blob, spinning badges)
     if (new URLSearchParams(window.location.search).has("static")) document.documentElement.classList.add("is-static");
-    if (prefersReducedMotion()) {
+    if (prefersReducedMotion() || isCake) {
       setGone(true);
       reveal();
       return;
