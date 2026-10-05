@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { gsap, prefersReducedMotion } from "@/lib/gsap";
 import DripEdge from "./DripEdge";
-import { wave } from "../content";
+import { useContent } from "../contentContext";
 
 // Waves in a 1440 × 320 box, starting far off-screen left so the text always covers the visible part.
 const wavePath = (y: number, amp: number, phase: number) => {
@@ -16,6 +16,7 @@ const BOTTOM = wavePath(236, 36, -120);
 
 /** Marquee → flavour names running along a wave (SVG text path), a small second row going the other way. Scroll speeds it up. */
 export default function FlavourWave() {
+  const { wave } = useContent();
   const topText = useRef<SVGTextPathElement>(null);
   const bottomText = useRef<SVGTextPathElement>(null);
   const REPS = { top: 4, bottom: 8 };
@@ -71,3 +72,4 @@ export default function FlavourWave() {
     </section>
   );
 }
+

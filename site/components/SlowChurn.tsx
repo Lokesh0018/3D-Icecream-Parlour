@@ -6,11 +6,10 @@ import { onSiteReady } from "@/lib/loading";
 import { getManifest, loadFrames } from "@/lib/frames";
 import DripEdge from "./DripEdge";
 import Heading from "./Heading";
-import { builder, slow } from "../content";
+import { useContent } from "../contentContext";
 
 /** Horizontal centre of the scoop in the video (0..1 of the frame width) as the camera pushes in. */
-function focusAt(p: number) {
-  const keys = slow.focus;
+function focusAt(p: number, keys: [number, number][]) {
   for (let i = 1; i < keys.length; i++) {
     if (p <= keys[i][0]) {
       const [p0, f0] = keys[i - 1];
@@ -25,7 +24,7 @@ function focusAt(p: number) {
  * The pour video, scrubbed by scroll. Like the engine's frame player, but the crop follows the scoop
  * (it starts on the right and ends near the centre) so the scoop always stays in view in a narrower box.
  */
-function usePour(folder: string, canvas: React.RefObject<HTMLCanvasElement | null>) {
+function usePour(folder: string, canvas: React.RefObject<HTMLCanvasElement | null>, focusKeys: [number, number][]) {
   const progress = useRef(0);
   useEffect(() => {
     const cv = canvas.current!;
@@ -60,7 +59,7 @@ function usePour(folder: string, canvas: React.RefObject<HTMLCanvasElement | nul
       const s = wide ? w / (img.naturalWidth * 0.94) : Math.max(w / img.naturalWidth, h / img.naturalHeight);
       const dw = img.naturalWidth * s;
       const dh = img.naturalHeight * s;
-      const x = Math.min(0, Math.max(w - dw, w / 2 - focusAt(p) * dw));
+      const x = Math.min(0, Math.max(w - dw, w / 2 - focusAt(p, focusKeys) * dw));
       ctx.clearRect(0, 0, w, h);
       ctx.drawImage(img, x, wide ? h - dh : (h - dh) / 2, dw, dh);
     };
@@ -82,7 +81,7 @@ function usePour(folder: string, canvas: React.RefObject<HTMLCanvasElement | nul
       ro.disconnect();
       player?.cancel();
     };
-  }, [folder, canvas]);
+  }, [folder, canvas, focusKeys]);
   return progress;
 }
 
@@ -91,9 +90,10 @@ function usePour(folder: string, canvas: React.RefObject<HTMLCanvasElement | nul
  * the heading and three round fact stickers sit on the matching pink on the left, so they never cover the scoop.
  */
 export default function SlowChurn() {
+  const { builder, slow } = useContent();
   const root = useRef<HTMLElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
-  const progress = usePour(slow.frames, canvas);
+  const progress = usePour(slow.frames, canvas, slow.focus);
 
   useEffect(() => {
     if (prefersReducedMotion()) {
@@ -124,7 +124,7 @@ export default function SlowChurn() {
       off();
       ctx?.revert();
     };
-  }, [progress]);
+  }, [progress, slow]);
 
   return (
     <section ref={root} aria-label="Made the slow way" className="relative z-[1] h-[240vh] [.is-static_&]:h-auto">
@@ -166,3 +166,4 @@ export default function SlowChurn() {
     </section>
   );
 }
+

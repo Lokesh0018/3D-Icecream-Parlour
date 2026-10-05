@@ -8,6 +8,7 @@ export const meta: SiteMeta = {
   description: "Hand-churned, small-batch ice cream from Hyderabad. Pistachio malai, Alphonso mango, double ka meetha and more, in scoops, sundaes and family tubs.",
   loaderText: "MELT THEORY",
   loader: false, // site/components/ScoopLoader.tsx replaces the engine loader
+  cursor: false, // Customized cursor removed
   // ?record=1 uses the section timeline (data-record-* attributes on the sections, docs/RECORDING.md): 37 s + the 2.5 s loader.
   // duration is only the fallback for constant-speed mode.
   record: { duration: 37 },

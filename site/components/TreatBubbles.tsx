@@ -5,10 +5,11 @@ import { gsap, prefersReducedMotion } from "@/lib/gsap";
 import DripEdge from "./DripEdge";
 import Heading from "./Heading";
 import Photo from "./Photo";
-import { treats } from "../content";
+import { useContent } from "../contentContext";
 
 /** C8 category circles on a white band: they pop in one by one; a pink ring grows around the one under the mouse. */
 export default function TreatBubbles() {
+  const { treats } = useContent();
   const list = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
@@ -68,3 +69,4 @@ export default function TreatBubbles() {
     </section>
   );
 }
+

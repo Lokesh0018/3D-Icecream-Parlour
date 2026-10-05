@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { gsap, prefersReducedMotion } from "@/lib/gsap";
 import { onReveal } from "./ScoopLoader";
 import { Scripted } from "./Heading";
-import { hero } from "../content";
+import { useContent } from "../contentContext";
 import Magnetic from "./Magnetic";
 
 /**
@@ -12,6 +12,7 @@ import Magnetic from "./Magnetic";
  * Opens with the loader; on scroll the cone lifts and the word slides apart.
  */
 export default function MeltHero() {
+  const { hero } = useContent();
   const root = useRef<HTMLElement>(null);
   const left = useRef<HTMLSpanElement>(null);
   const right = useRef<HTMLSpanElement>(null);
@@ -116,3 +117,4 @@ export default function MeltHero() {
     </section>
   );
 }
+

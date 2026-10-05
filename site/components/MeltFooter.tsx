@@ -5,7 +5,7 @@ import { gsap, prefersReducedMotion } from "@/lib/gsap";
 import { onSiteReady } from "@/lib/loading";
 import DripEdge from "./DripEdge";
 import { ScoopMark } from "./ScoopNav";
-import { footer } from "../content";
+import { useContent } from "../contentContext";
 
 // Which letters of the wordmark drip: [letter index, left %, length em]
 const DRIPS: [number, number, number][] = [
@@ -19,6 +19,7 @@ const DRIPS: [number, number, number][] = [
 
 /** WordmarkFooter, restyled: a strawberry footer; the giant MELT THEORY melts (its drips run longer) as you reach the end. */
 export default function MeltFooter() {
+  const { footer } = useContent();
   const root = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -115,3 +116,4 @@ export default function MeltFooter() {
     </footer>
   );
 }
+

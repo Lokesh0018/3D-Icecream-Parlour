@@ -5,7 +5,7 @@ import { gsap, prefersReducedMotion } from "@/lib/gsap";
 import { onSiteReady } from "@/lib/loading";
 import Heading from "./Heading";
 import { addToOrder, getCart, clearOrder } from "./ScoopNav";
-import { builder, flavours, Flavour } from "../content";
+import { useContent } from "../contentContext";
 
 // Scroll progress (0..1 of the pinned stretch) where scoop k starts to drop, and how long the drop + squish take.
 const dropAt = (k: number) => 0.1 + k * 0.26;
@@ -19,6 +19,7 @@ const DONE = 0.9;
  * Scroll-driven, so it plays by itself in ?record=1 and matches on laptop and phone.
  */
 export default function ScoopStacker() {
+  const { builder, flavours, Flavour } = useContent();
   const root = useRef<HTMLElement>(null);
   const stackRef = useRef<HTMLDivElement>(null);
   const drops = useRef<(HTMLDivElement | null)[]>([]);
@@ -259,3 +260,4 @@ export default function ScoopStacker() {
     </section>
   );
 }
+

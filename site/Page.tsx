@@ -10,7 +10,7 @@ import SweetDeals from "./components/SweetDeals";
 import LoveNotes from "./components/LoveNotes";
 import Parlours from "./components/Parlours";
 import MeltFooter from "./components/MeltFooter";
-import { builder, flavours } from "./content";
+import { useContent } from "./contentContext";
 import { meta } from "./site";
 
 const ICON = `data:image/svg+xml,${encodeURIComponent(
@@ -19,6 +19,7 @@ const ICON = `data:image/svg+xml,${encodeURIComponent(
 
 /** Melt Theory: a strawberry-milk parlour that melts. Plan + reasons: site/DESIGN.md. */
 export default function Page() {
+  const { builder, flavours } = useContent();
   return (
     <>
       {/* never restore the old scroll position on reload · ?record=1: hide the mouse arrow from the very first frame */}

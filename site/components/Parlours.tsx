@@ -1,12 +1,13 @@
 import DripEdge from "./DripEdge";
 import Heading from "./Heading";
 import Photo from "./Photo";
-import { parlours } from "../content";
+import { useContent } from "../contentContext";
 
 const PIN = "M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Zm0-9a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z";
 
 /** Store locations: the parlour in a tall arch on the left, three rounded parlour cards on the right. */
 export default function Parlours() {
+  const { parlours } = useContent();
   return (
     <section
       id="parlours"
@@ -55,3 +56,4 @@ export default function Parlours() {
     </section>
   );
 }
+

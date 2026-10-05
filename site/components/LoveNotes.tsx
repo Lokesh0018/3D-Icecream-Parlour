@@ -6,10 +6,11 @@ import { onSiteReady } from "@/lib/loading";
 import DripEdge from "./DripEdge";
 import Heading from "./Heading";
 import Photo from "./Photo";
-import { notes } from "../content";
+import { useContent } from "../contentContext";
 
 /** PolaroidWall → rounded photo stickers with hand-written notes on a blueberry band. They settle into their tilt as you scroll. */
 export default function LoveNotes() {
+  const { notes } = useContent();
   const grid = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -70,3 +71,4 @@ export default function LoveNotes() {
     </section>
   );
 }
+

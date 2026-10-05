@@ -7,6 +7,8 @@ import SitePage from "@/site/Page";
 import { meta } from "@/site/site";
 import SEO from "@/site/components/SEO";
 
+import { ContentProvider } from "@/site/contentContext";
+
 // Engine (same for every site) + the site's own page from site/.
 export default function Home() {
   return (
@@ -17,7 +19,9 @@ export default function Home() {
       <Animations />
       <RecordMode speed={meta.record?.speed} duration={meta.record?.duration} delay={meta.record?.delay} />
       {meta.cursor !== false && <Cursor />}
-      <SitePage />
+      <ContentProvider>
+        <SitePage />
+      </ContentProvider>
     </>
   );
 }

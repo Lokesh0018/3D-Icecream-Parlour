@@ -1,11 +1,12 @@
 import DripEdge from "./DripEdge";
 import Heading from "./Heading";
-import { flavours, shelf } from "../content";
+import { useContent } from "../contentContext";
 import { addToOrder } from "./ScoopNav";
 import { gsap } from "@/lib/gsap";
 
 /** ProductGrid → capsule cards: each flavour in its own colour, round top, the scoop sitting in the dome, price in a white pill. */
 export default function ScoopShelf() {
+  const { flavours, shelf } = useContent();
   return (
     <section id="flavours" className="relative z-[1] pt-[clamp(110px,13vw,200px)] pb-[clamp(80px,10vw,150px)]">
       <DripEdge color="var(--pistachio)" layout={1} />
@@ -97,3 +98,4 @@ export default function ScoopShelf() {
     </section>
   );
 }
+

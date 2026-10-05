@@ -1,7 +1,7 @@
 import DripEdge from "./DripEdge";
 import Heading from "./Heading";
 import Photo from "./Photo";
-import { deals } from "../content";
+import { useContent } from "../contentContext";
 import { addToOrder } from "./ScoopNav";
 import Magnetic from "./Magnetic";
 
@@ -29,6 +29,7 @@ function Badge({ text, className = "" }: { text: string; className?: string }) {
 
 /** Bento → a mango colour band with rounded offer tiles, each with a spinning badge. */
 export default function SweetDeals() {
+  const { deals } = useContent();
   const [family, date, happy, cake] = deals.items;
   return (
     <section
@@ -118,3 +119,4 @@ export default function SweetDeals() {
     </section>
   );
 }
+

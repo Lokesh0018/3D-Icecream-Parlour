@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap, prefersReducedMotion } from "@/lib/gsap";
 import { onReveal } from "./ScoopLoader";
-import { nav } from "../content";
+import { useContent } from "../contentContext";
 
 export type CartItem = { id: string; name: string; price: number };
 let globalCart: CartItem[] = [];
@@ -60,6 +60,7 @@ export const ScoopMark = ({ className = "h-[1em] w-auto" }: { className?: string
 
 /** N2: one floating white pill (mark · links with a sliding pink blob · Order count). Phone: pill + full pink sheet. */
 export default function ScoopNav() {
+  const { nav, isCake, toggleCake } = useContent();
   const ref = useRef<HTMLElement>(null);
   const links = useRef<(HTMLAnchorElement | null)[]>([]);
   const [active, setActive] = useState(-1);
@@ -197,7 +198,16 @@ export default function ScoopNav() {
               </a>
             ))}
           </nav>
-          <div className="ml-auto flex items-center gap-1.5">
+          <div className="ml-auto flex items-center gap-2 md:gap-3">
+            <button 
+              onClick={toggleCake} 
+              className="relative flex items-center h-8 w-14 rounded-full bg-accent/10 p-1 cursor-pointer transition-colors border border-accent/20"
+              aria-label="Toggle between Ice Cream and Cakes"
+            >
+              <div className={`absolute left-1 h-6 w-6 rounded-full bg-white shadow-sm flex items-center justify-center transition-transform duration-300 ease-[cubic-bezier(.22,1,.36,1)] ${isCake ? "translate-x-6" : "translate-x-0"}`}>
+                <span className="text-[12px] leading-none select-none">{isCake ? "🍰" : "🍦"}</span>
+              </div>
+            </button>
             {order}
             <button onClick={() => setOpen(true)} className="rounded-full px-3.5 py-2.5 text-[14px] font-extrabold lg:hidden">
               Menu
@@ -230,3 +240,4 @@ export default function ScoopNav() {
     </>
   );
 }
+
