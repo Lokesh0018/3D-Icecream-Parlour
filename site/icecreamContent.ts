@@ -109,7 +109,7 @@ export const slow = {
   captions: [
     { title: "Fresh milk", text: "every single morning", at: 0.1, pos: "md:left-[4%] md:bottom-[24%]", fill: "#ffffff" },
     { title: "40 minutes", text: "of slow churning", at: 0.35, pos: "md:left-[13%] md:bottom-[6%]", fill: FLAVOUR.mango },
-    { title: "20 litres", text: "max per batch", at: 0.6, pos: "md:left-[21%] md:bottom-[33%]", fill: FLAVOUR.pistachio },
+    { title: "20 litres", text: "max per batch", at: 0.6, pos: "md:left-[21%] md:bottom-[23%]", fill: FLAVOUR.pistachio },
   ],
 };
 

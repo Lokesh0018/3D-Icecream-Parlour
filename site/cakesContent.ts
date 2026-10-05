@@ -98,7 +98,7 @@ export const slow = {
   captions: [
     { title: "Real butter", text: "in every single batch", at: 0.1, pos: "md:left-[4%] md:bottom-[24%]", fill: "#ffffff" },
     { title: "45 minutes", text: "of slow baking", at: 0.35, pos: "md:left-[13%] md:bottom-[6%]", fill: FLAVOUR.mango },
-    { title: "Hand frosted", text: "with love and care", at: 0.6, pos: "md:left-[21%] md:bottom-[33%]", fill: FLAVOUR.pistachio },
+    { title: "Hand frosted", text: "with love and care", at: 0.6, pos: "md:left-[21%] md:bottom-[23%]", fill: FLAVOUR.pistachio },
   ],
 };
 
@@ -131,10 +131,10 @@ export const notes = {
   eyebrow: "Love notes",
   heading: ["Sweet *moments*,", "happy hearts"],
   items: [
-    { name: "Ananya & friends", where: "Gachibowli", text: "The rasmalai cake was the star of the party.", rating: 5, tone: FLAVOUR.mango, hint: "Friends with cake", photo: "/images/melt/note-friends.webp", tilt: -4 },
-    { name: "Meher, age 7", where: "Jubilee Hills", text: "I want the strawberry cake for every birthday now.", rating: 5, tone: FLAVOUR.strawberry, hint: "Kid with cake", photo: "/images/melt/note-kid.webp", tilt: 3 },
-    { name: "Rahul & Sana", where: "Banjara Hills", text: "Their tiramisu is out of this world.", rating: 5, tone: FLAVOUR.coffee, hint: "Couple at night", photo: "/images/melt/note-couple.webp", tilt: -2 },
-    { name: "The Reddys", where: "Jubilee Hills", text: "Best chocolate truffle in Hyderabad.", rating: 5, tone: FLAVOUR.pistachio, hint: "Family on a bench", photo: "/images/melt/note-family.webp", tilt: 4 },
+    { name: "Ananya & friends", where: "Gachibowli", text: "The rasmalai cake was the star of the party.", rating: 5, tone: FLAVOUR.mango, hint: "Friends with cake", photo: "/images/bake/note-friends.webp", tilt: -4 },
+    { name: "Meher, age 7", where: "Jubilee Hills", text: "I want the strawberry cake for every birthday now.", rating: 5, tone: FLAVOUR.strawberry, hint: "Kid with cake", photo: "/images/bake/note-kid.webp", tilt: 3 },
+    { name: "Rahul & Sana", where: "Banjara Hills", text: "Their tiramisu is out of this world.", rating: 5, tone: FLAVOUR.coffee, hint: "Couple at night", photo: "/images/bake/note-couple.webp", tilt: -2 },
+    { name: "The Reddys", where: "Jubilee Hills", text: "Best chocolate truffle in Hyderabad.", rating: 5, tone: FLAVOUR.pistachio, hint: "Family on a bench", photo: "/images/bake/note-family.webp", tilt: 4 },
   ],
 };
 
@@ -142,7 +142,7 @@ export const parlours = {
   eyebrow: "Our patisseries",
   heading: ["Come say", "*hi*"],
   text: "Three beautiful patisseries across Hyderabad. Walk in, enjoy a slice, take your time.",
-  photo: { photo: "/images/melt/parlour.webp", tone: FLAVOUR.pistachio, hint: "Patisserie interior" },
+  photo: { photo: "/images/bake/bakery.webp", tone: FLAVOUR.pistachio, hint: "Patisserie interior" },
   items: [
     { name: "Jubilee Hills", note: "The first one. Garden seating.", hours: "12 PM – 11 PM", late: "Till midnight Fri–Sun" },
     { name: "Gachibowli", note: "Near the offices. Fast queue.", hours: "11 AM – 11 PM", late: "Happy hour 4–6 PM" },
