@@ -86,9 +86,9 @@ export const slow = {
   eyebrow: "How it's baked",
   heading: ["Baked the", "*slow* way"],
   text: "No premix, no powder. Ovens turn on at 4 AM and the first batch is ready by noon.",
-  frames: "/frames/melt-pour",
+  frames: "/frames/crumb-crown",
   alt: "Warm chocolate poured over a cake, topped with pistachios",
-  panel: "linear-gradient(180deg, #e2c4c6, #ebd7dd)",
+  panel: "linear-gradient(180deg, #efe5db, #e8dccf)",
   focus: [
     [0, 0.74],
     [0.33, 0.66],
