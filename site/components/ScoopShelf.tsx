@@ -35,13 +35,13 @@ export default function ScoopShelf() {
                 "data-record-offset": "40",
                 "data-record-offset-mobile": "80",
               })}
-              className="capsule group relative flex flex-col pt-[9%] transition-transform duration-500 hover:-translate-y-2" style={{ background: f.fill, color: f.ink }} data-cursor="Add">
+              className="capsule group relative flex flex-col pt-[9%] transition-transform duration-500 hover:-translate-y-2" style={{ background: f.fill, color: f.ink, viewTransitionName: `shelf-card-${k}` }} data-cursor="Add">
               <div className="relative mx-auto w-[70%]">
-                <img src={f.image} alt={`${f.name} scoop`} width={1000} height={1000} className="aspect-square w-full object-contain object-bottom drop-shadow-[0_22px_18px_rgba(60,10,30,.2)] transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover:-translate-y-2 group-hover:-rotate-6" />
+                <img src={f.image} style={{ viewTransitionName: `shelf-img-${k}` }} alt={`${f.name} scoop`} width={1000} height={1000} className="aspect-square w-full object-contain object-bottom drop-shadow-[0_22px_18px_rgba(60,10,30,.2)] transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover:-translate-y-2 group-hover:-rotate-6" />
               </div>
               <div className="flex flex-1 flex-col px-4 pt-4 pb-4 md:px-7 md:pt-6 md:pb-7">
                 {f.tag && <span className="tag self-start !text-[#2b1233]">{f.tag}</span>}
-                <h3 className="font-display mt-3 text-[clamp(22px,2.3vw,36px)]">{f.name}</h3>
+                <h3 style={{ viewTransitionName: `shelf-title-${k}` }} className="font-display mt-3 text-[clamp(22px,2.3vw,36px)]">{f.name}</h3>
                 <p className="mt-2 hidden text-[15px] leading-snug opacity-85 md:block">{f.note}</p>
                 <div className="mt-auto flex items-center justify-between gap-2 pt-4 md:pt-6">
                   <span className="rounded-full bg-white px-3 py-2 text-[14px] font-extrabold text-[#2b1233] md:px-4 md:text-[16px]">

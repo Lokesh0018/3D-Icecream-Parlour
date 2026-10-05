@@ -54,12 +54,12 @@ export type Flavour = {
 };
 
 export const flavours: Flavour[] = [
-  { id: "pistachio", name: "Pistachio Rose", note: "Pistachio sponge with delicate rose buttercream", price: 1200, tag: "Bestseller", fill: FLAVOUR.pistachio, ink: "#2b1233", image: "/images/melt/scoop-pistachio.webp" },
-  { id: "mango", name: "Mango Cheesecake", note: "Fresh mango glaze over creamy baked cheese", price: 1400, tag: "Seasonal", fill: FLAVOUR.mango, ink: "#2b1233", image: "/images/melt/scoop-mango.webp" },
-  { id: "strawberry", name: "Strawberry Shortcake", note: "Vanilla sponge layered with fresh strawberries", price: 1100, tag: "Kids' pick", fill: FLAVOUR.strawberry, ink: "#2b1233", image: "/images/melt/scoop-strawberry.webp" },
-  { id: "coffee", name: "Tiramisu", note: "Espresso soaked ladyfingers and mascarpone", price: 1500, tag: "New", fill: FLAVOUR.coffee, ink: "#2b1233", image: "/images/melt/scoop-coffee.webp" },
-  { id: "cocoa", name: "Belgian Chocolate", note: "70% dark chocolate ganache and moist sponge", price: 1600, tag: "Vegan options", fill: FLAVOUR.cocoa, ink: "#fff1e6", image: "/images/melt/scoop-cocoa.webp" },
-  { id: "meetha", name: "Rasmalai Cake", note: "Cardamom cream, saffron sponge, pistachios", price: 1600, tag: "Only here", fill: FLAVOUR.meetha, ink: "#2b1233", image: "/images/melt/scoop-meetha.webp" },
+  { id: "black-forest", name: "Black Forest", note: "Classic chocolate sponge, cherries, and whipped cream", price: 1200, tag: "Bestseller", fill: FLAVOUR.pistachio, ink: "#2b1233", image: "/images/bake/black-forest.webp" },
+  { id: "red-velvet", name: "Red Velvet", note: "Rich red velvet sponge with cream cheese frosting", price: 1400, tag: "Seasonal", fill: FLAVOUR.mango, ink: "#2b1233", image: "/images/bake/red-velvet.webp" },
+  { id: "chocolate-truffle", name: "Chocolate Truffle", note: "Dense chocolate cake with dark chocolate ganache", price: 1500, tag: "Kids' pick", fill: FLAVOUR.strawberry, ink: "#2b1233", image: "/images/bake/chocolate.webp" },
+  { id: "pineapple", name: "Pineapple", note: "Vanilla sponge with fresh pineapple and cream", price: 1100, tag: "New", fill: FLAVOUR.coffee, ink: "#2b1233", image: "/images/bake/pine-apple.webp" },
+  { id: "butterscotch", name: "Butterscotch", note: "Caramel sponge with crunchy butterscotch praline", price: 1300, tag: "Vegan options", fill: FLAVOUR.cocoa, ink: "#fff1e6", image: "/images/bake/butter-scotch.webp" },
+  { id: "fruit-cake", name: "Fruit Cake", note: "Mixed fresh fruit layered with light vanilla cream", price: 1600, tag: "Only here", fill: FLAVOUR.meetha, ink: "#2b1233", image: "/images/bake/fruit.webp" },
 ];
 
 export const shelf = {
@@ -77,7 +77,7 @@ export const builder = {
   text: "Pick your layers, fillings, and frosting. We bake it fresh for your celebration.",
   cone: "/images/melt/cone-empty.webp", // Replace with empty cake stand
   coneLine: { name: "Cake stand", price: "Free" },
-  scoops: [byId("pistachio"), byId("mango"), byId("cocoa")], // Used as layers
+  scoops: [byId("black-forest"), byId("red-velvet"), byId("chocolate-truffle")], // Used as layers
   tints: ["#fff1f4", "#e9f5e0", "#fff2c9", "#f6e3d8"],
   cta: "Add to order",
 };
