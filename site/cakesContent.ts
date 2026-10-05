@@ -32,8 +32,9 @@ export const hero = {
     { label: "Pick your cake", href: "#flavours" },
     { label: "Find a patisserie", href: "#parlours" },
   ],
-  cone: "/images/bake/cake-hero.webp", // Would be a cake image
-  bg: "/images/melt/hero-bg.jpg", // Default to the same background for now, or you can supply another
+  cone: "/images/bake/hero-cake.webp",
+  bg: "/images/common/hero-bg.webp",
+  imageClassName: "w-[75%] h-[75%] object-contain",
   toppings: icecreamHero.toppings,
 };
 

@@ -37,11 +37,10 @@ export const hero = {
     { label: "Find a parlour", href: "#parlours" },
   ],
   cone: "/images/melt/hero-icecream.webp",
-  bg: "/images/melt/hero-bg.jpg",
+  bg: "/images/common/hero-bg.webp",
   toppings: [
     { src: "/images/common/topping-strawberry.webp", alt: "", className: "left-[2%] top-[33%] w-[clamp(70px,10vw,170px)] rotate-[-12deg] md:left-[6%] md:top-[22%]", depth: 0.35 },
     { src: "/images/common/topping-pistachio.webp", alt: "", className: "right-[4%] top-[30%] w-[clamp(56px,7vw,120px)] rotate-[10deg] md:right-[9%] md:top-[18%]", depth: 0.55 },
-    { src: "/images/common/topping-milk.webp", alt: "", className: "md:right-[10%] top-[54%] w-[clamp(60px,8vw,140px)] rotate-[18deg] md:top-auto md:right-[4%] md:bottom-[30%]", depth: 0.25 },
     { src: "/images/common/topping-chocolate.webp", alt: "", className: "left-[5%] top-[57%] w-[clamp(50px,6vw,110px)] rotate-[-20deg] md:top-auto md:left-[12%] md:bottom-[34%]", depth: 0.45 },
   ],
 };

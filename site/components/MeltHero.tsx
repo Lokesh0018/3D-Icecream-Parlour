@@ -108,8 +108,8 @@ export default function MeltHero() {
 
       {/* the central image (16:9 image covering hero) */}
       <div className="absolute inset-0 flex justify-center items-center z-10 pointer-events-none">
-        <div ref={cone} style={{ viewTransitionName: 'hero-cone' }} className="w-full h-full relative">
-          <img ref={icecreamRef} src={hero.cone} alt="3D center image" className="float-soft w-full h-full object-cover object-center drop-shadow-[0_30px_30px_rgba(120,20,60,.22)] scale-105" />
+        <div ref={cone} style={{ viewTransitionName: 'hero-cone' }} className="w-full h-full relative flex items-center justify-center">
+          <img ref={icecreamRef} src={hero.cone} alt="3D center image" className={`float-soft object-cover object-center drop-shadow-[0_30px_30px_rgba(120,20,60,.22)] ${hero.imageClassName || "w-full h-full scale-105"}`} />
         </div>
       </div>
 
