@@ -48,7 +48,7 @@ export default function SweetDeals() {
   return (
     <section
       id="deals"
-      className="relative z-[1] bg-[var(--mango)] pt-[clamp(120px,13vw,200px)] pb-[clamp(80px,9vw,140px)]"
+      className="relative z-[1] bg-[var(--mango)] pt-[clamp(120px,13vw,200px)] pb-[clamp(80px,9vw,140px)] transition-colors duration-700"
       data-record-label="Sweet deals (hold)"
       data-record-time="1.5"
       data-record-hold="2"
@@ -109,7 +109,7 @@ export default function SweetDeals() {
           </article>
 
           {/* happy hour */}
-          <article className="relative flex flex-col justify-between gap-6 overflow-hidden rounded-[36px] p-6 text-[#fff1e6] md:p-7" style={{ background: happy.tone }}>
+          <article className="relative flex flex-col justify-between gap-6 overflow-hidden rounded-[36px] p-6 text-[#fff1e6] md:p-7 transition-colors duration-700" style={{ background: happy.tone }}>
             <span className="tag self-start !bg-white/15 !text-[#fff1e6]">{happy.badge}</span>
             <div>
               <p className="font-display text-[clamp(40px,3.6vw,60px)] leading-none">{happy.price}</p>
@@ -119,7 +119,7 @@ export default function SweetDeals() {
           </article>
 
           {/* cakes */}
-          <article className="relative flex flex-col justify-between gap-6 overflow-hidden rounded-[36px] p-6 md:p-7" style={{ background: cake.tone }}>
+          <article className="relative flex flex-col justify-between gap-6 overflow-hidden rounded-[36px] p-6 md:p-7 transition-colors duration-700" style={{ background: cake.tone }}>
             <Badge text={cake.badge} className="-top-3 -right-3 scale-[0.8]" />
             <span className="tag self-start">{cake.badge}</span>
             <div>

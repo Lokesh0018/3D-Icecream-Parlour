@@ -90,10 +90,21 @@ function usePour(folder: string, canvas: React.RefObject<HTMLCanvasElement | nul
  * the heading and three round fact stickers sit on the matching pink on the left, so they never cover the scoop.
  */
 export default function SlowChurn() {
-  const { builder, slow } = useContent();
+  const { builder, slow, isCake } = useContent() as any;
   const root = useRef<HTMLElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const progress = usePour(slow.frames, canvas, slow.focus);
+
+  useEffect(() => {
+    if (contentRef.current) {
+      gsap.fromTo(
+        contentRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
+      );
+    }
+  }, [isCake]);
 
   useEffect(() => {
     if (prefersReducedMotion()) {
@@ -115,7 +126,7 @@ export default function SlowChurn() {
           },
         });
         tl.set({}, {}, 1);
-        slow.captions.forEach((c, i) => {
+        slow.captions.forEach((c: any, i: number) => {
           tl.fromTo(`[data-sticker="${i}"]`, { scale: 0, rotate: -20 }, { scale: 1, rotate: i % 2 ? 6 : -6, duration: 0.08, ease: "power3.out" }, c.at);
         });
       }, root);
@@ -134,8 +145,8 @@ export default function SlowChurn() {
       <div aria-hidden data-record-label="Made slow: pour" data-record-time="3.5" data-record-align="bottom" className="pointer-events-none absolute inset-x-0 bottom-0 h-px" />
 
       <div className="sticky top-0 flex h-[100svh] items-center pt-[calc(var(--nav-h)-16px)] pb-4 md:pb-6 [.is-static_&]:relative">
-        <div className="container-x h-full">
-          <div className="relative flex h-full flex-col justify-center overflow-hidden rounded-[32px] md:block md:rounded-[48px]" style={{ background: slow.panel }}>
+        <div ref={contentRef} className="container-x h-full">
+          <div className="relative flex h-full flex-col justify-center overflow-hidden rounded-[32px] md:block md:rounded-[48px] transition-colors duration-700" style={{ background: slow.panel }}>
             <div className="relative z-[1] px-6 md:max-w-[40%] md:p-14">
               <p className="eyebrow">{slow.eyebrow}</p>
               <Heading lines={slow.heading} className="mt-4 text-[clamp(42px,5.6vw,100px)] md:mt-5" />

@@ -19,7 +19,7 @@ export const nav = {
     { label: "Build a cake", href: "#build" },
     { label: "Treats", href: "#treats" },
     { label: "Deals", href: "#deals" },
-    { label: "Patisseries", href: "#patisseries" },
+    { label: "Patisseries", href: "#parlours" },
   ],
   cta: { label: "Order", href: "#build" },
 };

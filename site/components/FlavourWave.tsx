@@ -16,10 +16,21 @@ const BOTTOM = wavePath(236, 36, -120);
 
 /** Marquee → flavour names running along a wave (SVG text path), a small second row going the other way. Scroll speeds it up. */
 export default function FlavourWave() {
-  const { wave } = useContent();
+  const { wave, isCake } = useContent() as any;
   const topText = useRef<SVGTextPathElement>(null);
   const bottomText = useRef<SVGTextPathElement>(null);
+  const contentRef = useRef<SVGSVGElement>(null);
   const REPS = { top: 4, bottom: 8 };
+
+  useEffect(() => {
+    if (contentRef.current) {
+      gsap.fromTo(
+        contentRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.6, ease: "power2.out" }
+      );
+    }
+  }, [isCake]);
 
   useEffect(() => {
     if (prefersReducedMotion()) return;
@@ -58,7 +69,7 @@ export default function FlavourWave() {
       data-record-align="center"
     >
       <DripEdge color="var(--bg)" layout={0} />
-      <svg aria-hidden viewBox="0 0 1440 320" preserveAspectRatio="xMidYMid slice" className="block h-[max(22.2vw,220px)] w-full">
+      <svg ref={contentRef} aria-hidden viewBox="0 0 1440 320" preserveAspectRatio="xMidYMid slice" className="block h-[max(22.2vw,220px)] w-full">
         <path id="wave-top" d={TOP} fill="none" />
         <path id="wave-bottom" d={BOTTOM} fill="none" />
         <text className="wave-text" fontSize="74" fill="#2b1233">

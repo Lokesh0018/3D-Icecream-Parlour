@@ -10,8 +10,19 @@ import { useContent } from "../contentContext";
 
 /** PolaroidWall → rounded photo stickers with hand-written notes on a blueberry band. They settle into their tilt as you scroll. */
 export default function LoveNotes() {
-  const { notes } = useContent();
+  const { notes, isCake } = useContent() as any;
   const grid = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (contentRef.current) {
+      gsap.fromTo(
+        contentRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
+      );
+    }
+  }, [isCake]);
 
   useEffect(() => {
     if (prefersReducedMotion()) return;
@@ -32,18 +43,18 @@ export default function LoveNotes() {
       off();
       ctx?.revert();
     };
-  }, []);
+  }, [notes]);
 
   return (
     <section
-      className="relative z-[1] bg-[var(--blueberry)] pt-[clamp(120px,13vw,200px)] pb-[clamp(90px,10vw,150px)]"
+      className="relative z-[1] bg-[var(--blueberry)] pt-[clamp(120px,13vw,200px)] pb-[clamp(90px,10vw,150px)] transition-colors duration-700"
       data-record-label="Love notes (hold)"
       data-record-time="1.5"
       data-record-hold="1.5"
       data-record-align="center"
     >
       <DripEdge color="var(--mango)" layout={1} flip />
-      <div className="container-x">
+      <div ref={contentRef} className="container-x">
         <div className="text-center">
           <p className="eyebrow">{notes.eyebrow}</p>
           <Heading lines={notes.heading} className="mt-5 text-[clamp(44px,5.4vw,96px)]" />

@@ -33,6 +33,17 @@ export default function ScoopStacker() {
   const ordered = useRef(false);
 
   const [scoops, setScoops] = useState<Flavour[]>(builder.scoops);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (contentRef.current) {
+      gsap.fromTo(
+        contentRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
+      );
+    }
+  }, [isCake]);
 
   useEffect(() => {
     const onOrder = () => {
@@ -167,10 +178,10 @@ export default function ScoopStacker() {
       <div aria-hidden data-record-label="Build your cone: all 3 scoops" data-record-time="6" data-record-align="bottom" className="pointer-events-none absolute inset-x-0 bottom-0 h-px" />
 
       <div
-        className={`stack-tint ${still ? "relative py-28" : "sticky top-0 h-[100svh]"} flex flex-col overflow-hidden pt-[var(--nav-h)]`}
+        className={`stack-tint ${still ? "relative py-28" : "sticky top-0 h-[100svh]"} flex flex-col overflow-hidden pt-[var(--nav-h)] transition-colors duration-700`}
         style={{ backgroundColor: builder.tints[n] }}
       >
-        <div className="container-x grid flex-1 grid-rows-[auto_1fr_auto] items-center gap-3 py-3 lg:grid-cols-[1fr_auto_1fr] lg:grid-rows-1 lg:gap-12 lg:py-8">
+        <div ref={contentRef} className="container-x grid flex-1 grid-rows-[auto_1fr_auto] items-center gap-3 py-3 lg:grid-cols-[1fr_auto_1fr] lg:grid-rows-1 lg:gap-12 lg:py-8">
           {/* left: heading + steps */}
           <div>
             <p className="eyebrow hidden lg:inline-flex">{builder.eyebrow}</p>

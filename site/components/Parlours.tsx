@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import { gsap } from "@/lib/gsap";
 import DripEdge from "./DripEdge";
 import Heading from "./Heading";
 import Photo from "./Photo";
@@ -7,7 +11,19 @@ const PIN = "M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Zm0-9a2.5 
 
 /** Store locations: the parlour in a tall arch on the left, three rounded parlour cards on the right. */
 export default function Parlours() {
-  const { parlours } = useContent();
+  const { parlours, isCake } = useContent() as any;
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (contentRef.current) {
+      gsap.fromTo(
+        contentRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
+      );
+    }
+  }, [isCake]);
+
   return (
     <section
       id="parlours"
@@ -19,7 +35,7 @@ export default function Parlours() {
       data-record-align-mobile="bottom"
     >
       <DripEdge color="var(--blueberry)" layout={2} />
-      <div className="container-x grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+      <div ref={contentRef} className="container-x grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         <div data-reveal className="arch relative mx-auto aspect-[4/5] w-full max-w-[min(520px,59vh)] overflow-hidden">
           <Photo photo={parlours.photo.photo} tone={parlours.photo.tone} hint={parlours.photo.hint} alt="Inside a Melt Theory parlour" />
         </div>

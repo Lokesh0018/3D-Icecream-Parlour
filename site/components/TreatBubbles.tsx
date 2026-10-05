@@ -9,8 +9,19 @@ import { useContent } from "../contentContext";
 
 /** C8 category circles on a white band: they pop in one by one; a pink ring grows around the one under the mouse. */
 export default function TreatBubbles() {
-  const { treats } = useContent();
+  const { treats, isCake } = useContent() as any;
   const list = useRef<HTMLUListElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (contentRef.current) {
+      gsap.fromTo(
+        contentRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
+      );
+    }
+  }, [isCake]);
 
   useEffect(() => {
     if (prefersReducedMotion()) return;
@@ -33,7 +44,7 @@ export default function TreatBubbles() {
       tween?.kill();
       gsap.set(bubbles, { clearProps: "transform,opacity" });
     };
-  }, []);
+  }, [isCake]);
 
   return (
     <section
