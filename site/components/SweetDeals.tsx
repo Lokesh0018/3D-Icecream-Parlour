@@ -1,9 +1,11 @@
+import { useRef, useEffect } from "react";
 import DripEdge from "./DripEdge";
 import Heading from "./Heading";
 import Photo from "./Photo";
 import { useContent } from "../contentContext";
 import { addToOrder } from "./ScoopNav";
 import Magnetic from "./Magnetic";
+import { gsap } from "@/lib/gsap";
 
 /** A round sticker with its text running around the edge, slowly spinning. */
 function Badge({ text, className = "" }: { text: string; className?: string }) {
@@ -29,7 +31,19 @@ function Badge({ text, className = "" }: { text: string; className?: string }) {
 
 /** Bento → a mango colour band with rounded offer tiles, each with a spinning badge. */
 export default function SweetDeals() {
-  const { deals } = useContent();
+  const { deals, isCake } = useContent() as any;
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      gsap.fromTo(
+        containerRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
+      );
+    }
+  }, [isCake]);
+
   const [family, date, happy, cake] = deals.items;
   return (
     <section
@@ -43,7 +57,7 @@ export default function SweetDeals() {
       data-record-offset-mobile="-60"
     >
       <DripEdge color="var(--surface)" layout={0} flip />
-      <div className="container-x">
+      <div ref={containerRef} className="container-x">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="eyebrow">{deals.eyebrow}</p>

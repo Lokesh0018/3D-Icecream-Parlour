@@ -120,8 +120,8 @@ export const deals = {
   heading: ["Treat", "*everyone*"],
   text: "Something for the whole family, the date night and the 4 PM craving. At every patisserie.",
   items: [
-    { id: "family", title: "Weekend Party Box", text: "Assorted box of 12 cupcakes and 6 brownies.", price: "₹999", was: "₹1,240", badge: "Every Weekend", tone: FLAVOUR.pistachio, hint: "Party box", photo: "/images/melt/deal-family.webp" },
-    { id: "date", title: "Date-night dessert", text: "Two slices of rich chocolate cake, warm fudge.", price: "₹449", badge: "After 7 PM", tone: FLAVOUR.strawberry, hint: "Cake for two", photo: "/images/melt/deal-date.webp" },
+    { id: "family", title: "Weekend Party Box", text: "Assorted box of 12 cupcakes and 6 brownies.", price: "₹999", was: "₹1,240", badge: "Every Weekend", tone: FLAVOUR.pistachio, hint: "Party box", photo: "/images/bake/deal-family.webp" },
+    { id: "date", title: "Date-night dessert", text: "Two slices of rich chocolate cake, warm fudge.", price: "₹449", badge: "After 7 PM", tone: FLAVOUR.strawberry, hint: "Cake for two", photo: "/images/bake/deal-date.webp" },
     { id: "happy", title: "Second slice half price", text: "Every day between 4 and 6 PM.", price: "4–6 PM", badge: "Happy hour", tone: FLAVOUR.cocoa, hint: "" },
     { id: "cake", title: "Birthday specials", text: "Free candle set and custom message with every 1kg cake.", price: "from ₹1,199", badge: "Made to order", tone: FLAVOUR.blueberry, hint: "" },
   ],
