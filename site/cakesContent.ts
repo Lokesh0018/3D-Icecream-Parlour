@@ -1,3 +1,5 @@
+import { hero as icecreamHero } from "./icecreamContent";
+
 export const STUDIO = "Triozen Tech";
 
 export const FLAVOUR = {
@@ -17,7 +19,7 @@ export const nav = {
     { label: "Build a cake", href: "#build" },
     { label: "Treats", href: "#treats" },
     { label: "Deals", href: "#deals" },
-    { label: "Parlours", href: "#parlours" },
+    { label: "Patisseries", href: "#patisseries" },
   ],
   cta: { label: "Order", href: "#build" },
 };
@@ -32,7 +34,7 @@ export const hero = {
     { label: "Find a patisserie", href: "#parlours" },
   ],
   cone: "/images/bake/cake-hero.webp", // Would be a cake image
-  toppings: [], // Simplified for cakes
+  toppings: icecreamHero.toppings,
 };
 
 export const wave = {

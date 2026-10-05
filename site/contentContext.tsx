@@ -9,12 +9,27 @@ interface ContentContextType extends ContentType {
   toggleCake: () => void;
 }
 
+import { flushSync } from "react-dom";
+
 const ContentContext = createContext<ContentContextType | undefined>(undefined);
 
 export const ContentProvider = ({ children }: { children: ReactNode }) => {
   const [isCake, setIsCake] = useState(false);
 
-  const toggleCake = () => setIsCake(!isCake);
+  const toggleCake = () => {
+    if (!document.startViewTransition) {
+      setIsCake((prev) => !prev);
+      return;
+    }
+    const style = document.createElement('style');
+    style.textContent = `:root { view-transition-name: none !important; }`;
+    document.head.appendChild(style);
+    
+    const transition = document.startViewTransition(() => {
+      flushSync(() => setIsCake((prev) => !prev));
+    });
+    transition.finished.finally(() => document.head.removeChild(style));
+  };
 
   const currentContent = isCake ? cakesContent : icecreamContent;
 

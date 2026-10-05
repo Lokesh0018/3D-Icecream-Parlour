@@ -59,10 +59,10 @@ export default function MeltHero() {
 
       {/* giant word */}
       <p aria-hidden className="font-display absolute inset-x-0 top-[17%] flex -translate-y-1/2 justify-center gap-[3vw] text-[clamp(96px,27vw,440px)] md:gap-[12vw] md:text-[clamp(150px,27vw,470px)] leading-none font-bold tracking-[-0.03em] text-accent select-none md:top-[45%]">
-        <span ref={left} className="inline-block">
+        <span ref={left} className="inline-block" style={{ viewTransitionName: 'hero-word-left' }}>
           {hero.word.slice(0, half)}
         </span>
-        <span ref={right} className="inline-block">
+        <span ref={right} className="inline-block" style={{ viewTransitionName: 'hero-word-right' }}>
           {hero.word.slice(half)}
         </span>
       </p>
@@ -77,16 +77,18 @@ export default function MeltHero() {
       </div>
 
       {/* the cone */}
-      <div ref={cone} className="absolute top-[21%] left-1/2 h-[56%] -translate-x-1/2 md:top-[10%] md:h-[84%]">
-        <img src={hero.cone} alt="A waffle cone with pistachio, strawberry and mango scoops" className="float-soft h-full w-auto drop-shadow-[0_30px_30px_rgba(120,20,60,.22)]" />
+      <div className="absolute top-[21%] left-1/2 h-[56%] -translate-x-1/2 md:top-[10%] md:h-[84%] flex justify-center">
+        <div ref={cone} style={{ viewTransitionName: 'hero-cone' }} className="h-full">
+          <img src={hero.cone} alt="A waffle cone with pistachio, strawberry and mango scoops" className="float-soft h-full w-auto drop-shadow-[0_30px_30px_rgba(120,20,60,.22)]" />
+        </div>
       </div>
 
       {/* copy, bottom left */}
       <div className="container-x pointer-events-none absolute inset-x-0 bottom-[4%] flex flex-col gap-3 md:bottom-[7%] md:flex-row md:items-end md:justify-between">
         <div ref={copy} className="pointer-events-auto max-w-[440px]">
           <h1 className="font-display text-[clamp(46px,4.3vw,70px)]">
-            {hero.heading.map((l) => (
-              <span key={l} className="block">
+            {hero.heading.map((l, i) => (
+              <span key={i} className="block" style={{ viewTransitionName: `hero-heading-${i}` }}>
                 <Scripted text={l} />
               </span>
             ))}
