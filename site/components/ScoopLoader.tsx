@@ -10,7 +10,7 @@ import { atFromUrl, waitForClock } from "@/lib/atTime";
 
 const DROP = 1.7; // cone rises, a scoop drops in and squishes, the name pops up
 const OPEN = 0.8; // a circle opens from the cone and reveals the page
-export const LOADER_SECONDS = DROP + OPEN; // 2.5
+const LOADER_SECONDS = DROP + OPEN; // 2.5
 
 let revealed = false;
 

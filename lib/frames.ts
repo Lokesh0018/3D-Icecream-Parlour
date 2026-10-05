@@ -18,7 +18,7 @@ export async function getManifest(folder: string): Promise<FrameManifest> {
   return res.json();
 }
 
-export function frameUrl(folder: string, m: FrameManifest, i: number) {
+function frameUrl(folder: string, m: FrameManifest, i: number) {
   return `${folder.replace(/\/$/, "")}/${m.prefix}${String(i + 1).padStart(m.pad, "0")}.${m.ext}`;
 }
 

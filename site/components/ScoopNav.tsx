@@ -9,7 +9,7 @@ export type CartItem = { id: string; name: string; price: number };
 let globalCart: CartItem[] = [];
 export const getCart = () => globalCart;
 
-export const showToast = (message: string) => {
+const showToast = (message: string) => {
   const existing = document.getElementById("order-toast");
   if (existing) existing.remove();
   
@@ -40,7 +40,7 @@ export const addToOrder = (item: CartItem) => {
   return true;
 };
 
-export const removeFromOrder = (index: number) => {
+const removeFromOrder = (index: number) => {
   globalCart.splice(index, 1);
   window.dispatchEvent(new Event("melt:order"));
 };
