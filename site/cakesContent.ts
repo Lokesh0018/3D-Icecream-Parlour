@@ -106,12 +106,12 @@ export const treats = {
   eyebrow: "The menu",
   heading: ["Pick a", "*treat*"],
   items: [
-    { name: "Slices", count: "12 flavours", tone: FLAVOUR.strawberry, hint: "Cake slices", photo: "/images/melt/cat-scoops.webp" },
-    { name: "Cupcakes", count: "8 varieties", tone: FLAVOUR.mango, hint: "Cupcakes", photo: "/images/melt/cat-sundae.webp" },
-    { name: "Party Cakes", count: "1kg · 2kg", tone: FLAVOUR.pistachio, hint: "Whole cakes", photo: "/images/melt/cat-tub.webp" },
-    { name: "Brownies", count: "6 types", tone: FLAVOUR.coffee, hint: "Brownies", photo: "/images/melt/cat-shake.webp" },
-    { name: "Wedding Cakes", count: "Order 7 days ahead", tone: FLAVOUR.blueberry, hint: "Tiered cakes", photo: "/images/melt/cat-cake.webp" },
-    { name: "Macarons", count: "Assorted boxes", tone: FLAVOUR.meetha, hint: "Macarons", photo: "/images/melt/cat-kulfi.webp" },
+    { name: "Slices", count: "10 flavours", tone: FLAVOUR.strawberry, hint: "Cake slices", photo: "/images/bake/slices-flavours.webp" },
+    { name: "Cupcakes", count: "8 varieties", tone: FLAVOUR.mango, hint: "Cupcakes", photo: "/images/bake/cat-cup.webp" },
+    { name: "Party Cakes", count: "1kg · 2kg", tone: FLAVOUR.pistachio, hint: "Whole cakes", photo: "/images/bake/cat-party.webp" },
+    { name: "Brownies", count: "6 types", tone: FLAVOUR.coffee, hint: "Brownies", photo: "/images/bake/cat-brownie.webp" },
+    { name: "Wedding Cakes", count: "Order 7 days ahead", tone: FLAVOUR.blueberry, hint: "Tiered cakes", photo: "/images/bake/cat-wedding.webp" },
+    { name: "Macarons", count: "Assorted boxes", tone: FLAVOUR.meetha, hint: "Macarons", photo: "/images/bake/cat-macron.webp" },
   ],
 };
 
