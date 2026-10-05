@@ -37,7 +37,7 @@ export default function Parlours() {
       <DripEdge color="var(--blueberry)" layout={2} />
       <div ref={contentRef} className="container-x grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         <div data-reveal className="arch relative mx-auto aspect-[4/5] w-full max-w-[min(520px,59vh)] overflow-hidden">
-          <Photo photo={parlours.photo.photo} tone={parlours.photo.tone} hint={parlours.photo.hint} alt="Inside a Melt Theory parlour" />
+          <Photo photo={parlours.photo.photo} tone={parlours.photo.tone} hint={parlours.photo.hint} alt="Inside a Scoop & Slice parlour" />
         </div>
 
         <div>

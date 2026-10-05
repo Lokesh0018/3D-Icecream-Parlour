@@ -13,7 +13,7 @@ export const FLAVOUR = {
 };
 
 export const nav = {
-  logo: "Melt Theory",
+  logo: "Scoop & Slice",
   links: [
     { label: "Flavours", href: "#flavours" },
     { label: "Build a cake", href: "#build" },
@@ -151,7 +151,7 @@ export const parlours = {
 };
 
 export const footer = {
-  word: "MELT THEORY",
+  word: "SCOOP & SLICE",
   newsletter: {
     title: "Get the new bake first",
     text: "One email when a new cake hits the counter. That's it.",
@@ -162,5 +162,5 @@ export const footer = {
     { title: "Visit", links: ["Jubilee Hills", "Gachibowli", "Banjara Hills"] },
     { title: "Hello", links: ["Instagram", "Weddings", "Careers"] },
   ],
-  note: `Concept website by ${STUDIO}. Melt Theory is a design concept; cakes and prices are samples.`,
+  note: `Concept website by ${STUDIO}. Scoop & Slice is a design concept; cakes and prices are samples.`,
 };

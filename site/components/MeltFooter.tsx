@@ -109,7 +109,7 @@ export default function MeltFooter() {
 
       <div className="container-x flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-t border-white/25 py-4 text-[12px] font-semibold md:py-5 md:text-[13px]">
         <p className="flex items-center gap-2">
-          <ScoopMark className="h-4 w-auto text-white" />© 2026 Melt Theory (concept)
+          <ScoopMark className="h-4 w-auto text-white" />© 2026 Scoop & Slice (concept)
         </p>
         <p className="opacity-90">{footer.note}</p>
       </div>

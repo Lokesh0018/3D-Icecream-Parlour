@@ -179,7 +179,7 @@ export default function ScoopNav() {
     <>
       <header ref={ref} className="fixed inset-x-0 top-3 z-50 flex justify-center px-3 md:top-5">
         <div className="flex w-full max-w-[860px] items-center gap-2 rounded-full bg-white/95 p-1.5 pl-5 shadow-[0_14px_40px_-16px_rgba(120,20,60,.35)] md:w-full md:gap-4 transition-all duration-500">
-          <a href="#" aria-label="Melt Theory, home" className="font-display flex items-center gap-1.5 text-[22px] whitespace-nowrap text-accent md:text-[24px]">
+          <a href="#" aria-label="Scoop & Slice, home" className="font-display flex items-center gap-1.5 text-[22px] whitespace-nowrap text-accent md:text-[24px]">
             <ScoopMark className="h-[1.05em] w-auto text-[#ff8fb1]" />
             {nav.logo}
           </a>

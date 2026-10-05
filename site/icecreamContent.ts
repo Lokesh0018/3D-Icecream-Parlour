@@ -17,7 +17,7 @@ export const FLAVOUR = {
 export type PhotoSlot = { photo?: string; tone: string; hint: string };
 
 export const nav = {
-  logo: "Melt Theory",
+  logo: "Scoop & Slice",
   links: [
     { label: "Flavours", href: "#flavours" },
     { label: "Build a cone", href: "#build" },
@@ -144,7 +144,7 @@ export const notes = {
   items: [
     { name: "Ananya & friends", where: "Gachibowli", text: "We came for one scoop. We left with a tub each.", rating: 5, tone: FLAVOUR.mango, hint: "Friends with cones", photo: "/images/melt/note-friends.webp", tilt: -4 },
     { name: "Meher, age 7", where: "Jubilee Hills", text: "Strawberry is the best colour AND the best flavour.", rating: 5, tone: FLAVOUR.strawberry, hint: "Kid with a scoop", photo: "/images/melt/note-kid.webp", tilt: 3 },
-    { name: "Rahul & Sana", where: "Banjara Hills", text: "Our Friday date is now a Melt Theory date.", rating: 5, tone: FLAVOUR.coffee, hint: "Couple at night", photo: "/images/melt/note-couple.webp", tilt: -2 },
+    { name: "Rahul & Sana", where: "Banjara Hills", text: "Our Friday date is now a Scoop & Slice date.", rating: 5, tone: FLAVOUR.coffee, hint: "Couple at night", photo: "/images/melt/note-couple.webp", tilt: -2 },
     { name: "The Reddys", where: "Jubilee Hills", text: "Double ka meetha as ice cream. Nani approved.", rating: 5, tone: FLAVOUR.pistachio, hint: "Family on a bench", photo: "/images/melt/note-family.webp", tilt: 4 },
   ],
 };
@@ -162,7 +162,7 @@ export const parlours = {
 };
 
 export const footer = {
-  word: "MELT THEORY",
+  word: "SCOOP & SLICE",
   newsletter: {
     title: "Get the new flavour first",
     text: "One email when a new flavour hits the counter. That's it.",
@@ -173,5 +173,5 @@ export const footer = {
     { title: "Visit", links: ["Jubilee Hills", "Gachibowli", "Banjara Hills"] },
     { title: "Hello", links: ["Instagram", "Parties & events", "Careers"] },
   ],
-  note: `Concept website by ${STUDIO}. Melt Theory is a design concept; flavours and prices are samples.`,
+  note: `Concept website by ${STUDIO}. Scoop & Slice is a design concept; flavours and prices are samples.`,
 };
