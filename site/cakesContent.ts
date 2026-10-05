@@ -75,7 +75,7 @@ export const builder = {
   eyebrow: "Build your cake",
   heading: ["Build your", "*cake*"],
   text: "Pick your layers, fillings, and frosting. We bake it fresh for your celebration.",
-  cone: "/images/melt/cone-empty.webp", // Replace with empty cake stand
+  cone: "/images/bake/cake-base.webp", // Cake stand
   coneLine: { name: "Cake stand", price: "Free" },
   scoops: [byId("black-forest"), byId("red-velvet"), byId("chocolate-truffle")], // Used as layers
   tints: ["#fff1f4", "#e9f5e0", "#fff2c9", "#f6e3d8"],

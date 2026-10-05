@@ -6,6 +6,7 @@ import { onSiteReady } from "@/lib/loading";
 import Heading from "./Heading";
 import { addToOrder, getCart, clearOrder } from "./ScoopNav";
 import { useContent } from "../contentContext";
+import type { Flavour } from "../cakesContent";
 
 // Scroll progress (0..1 of the pinned stretch) where scoop k starts to drop, and how long the drop + squish take.
 const dropAt = (k: number) => 0.1 + k * 0.26;
@@ -19,7 +20,7 @@ const DONE = 0.9;
  * Scroll-driven, so it plays by itself in ?record=1 and matches on laptop and phone.
  */
 export default function ScoopStacker() {
-  const { builder, flavours, Flavour } = useContent();
+  const { builder, flavours, isCake } = useContent() as any;
   const root = useRef<HTMLElement>(null);
   const stackRef = useRef<HTMLDivElement>(null);
   const drops = useRef<(HTMLDivElement | null)[]>([]);
@@ -30,14 +31,14 @@ export default function ScoopStacker() {
   const [delivered, setDelivered] = useState(false);
   const [still, setStill] = useState(false);
   const ordered = useRef(false);
-  
+
   const [scoops, setScoops] = useState<Flavour[]>(builder.scoops);
 
   useEffect(() => {
     const onOrder = () => {
       const cart = getCart();
       const scoopsInCart = cart
-        .map(item => flavours.find(f => f.id === item.id))
+        .map((item: any) => flavours.find((f: any) => f.id === item.id))
         .filter(Boolean) as Flavour[];
       setScoops(scoopsInCart);
       ordered.current = false; // Reset ordered state so it can be ordered again if needed
@@ -45,7 +46,11 @@ export default function ScoopStacker() {
     window.addEventListener("melt:order", onOrder);
     onOrder();
     return () => window.removeEventListener("melt:order", onOrder);
-  }, []);
+  }, [flavours]);
+
+  useEffect(() => {
+    clearOrder();
+  }, [isCake]);
 
   useEffect(() => {
     if (prefersReducedMotion()) {
@@ -81,30 +86,49 @@ export default function ScoopStacker() {
         tl.set({}, {}, 1); // the timeline spans the whole pin (0..1)
         scoops.forEach((_, k) => {
           tl.fromTo(drops.current[k], { y: () => -window.innerHeight * 1.1, rotate: k % 2 ? 5 : -5 }, { y: 0, rotate: 0, duration: FALL, ease: "power2.in" }, dropAt(k));
-          // one soft squish on landing, no wobble
           tl.fromTo(squish.current[k], { scaleY: 0.84, scaleX: 1.1 }, { scaleY: 1, scaleX: 1, duration: SQUISH, ease: "power3.out", immediateRender: false }, dropAt(k) + FALL);
         });
+
+        // Breathing animation for the whole stack
+        if (isCake) {
+          gsap.to(stackRef.current, {
+            y: "-=7",
+            rotation: 0.5,
+            duration: 3,
+            ease: "sine.inOut",
+            yoyo: true,
+            repeat: -1
+          });
+        } else {
+          gsap.to(stackRef.current, {
+            y: "-=10",
+            duration: 2.5,
+            ease: "sine.inOut",
+            yoyo: true,
+            repeat: -1
+          });
+        }
       }, root);
     });
     return () => {
       off();
       ctx?.revert();
     };
-  }, [scoops]);
+  }, [scoops, isCake]);
 
   const handleBuy = (e: React.MouseEvent) => {
     e.preventDefault();
     if (!done || buying || delivered) return;
 
     setBuying(true);
-    
+
     // Delivery animation
     if (stackRef.current) {
       const tl = gsap.timeline({
         onComplete: () => {
           setDelivered(true);
           clearOrder();
-          
+
           // Reset animation state after a short delay
           setTimeout(() => {
             setBuying(false);
@@ -113,12 +137,12 @@ export default function ScoopStacker() {
           }, 3000);
         }
       });
-      
-      tl.to(stackRef.current, { 
-        scale: 0.9, 
-        y: 20, 
-        duration: 0.25, 
-        ease: "power2.out" 
+
+      tl.to(stackRef.current, {
+        scale: 0.9,
+        y: 20,
+        duration: 0.25,
+        ease: "power2.out"
       }).to(stackRef.current, {
         y: -window.innerHeight * 0.8,
         x: window.innerWidth * 0.1,
@@ -155,7 +179,7 @@ export default function ScoopStacker() {
             <p className="mt-5 hidden max-w-[340px] text-[17px] leading-relaxed text-muted lg:block">{builder.text}</p>
             <ol className="mt-8 hidden flex-col gap-2.5 lg:flex">
               {scoops.map((f, k) => (
-                <li key={f.id} className={`flex items-center gap-3 text-[16px] font-bold transition-opacity duration-500 ${k < n ? "opacity-100" : "opacity-45"}`}>
+                <li key={`${f.id}-${k}`} className={`flex items-center gap-3 text-[16px] font-bold transition-opacity duration-500 ${k < n ? "opacity-100" : "opacity-45"}`}>
                   <span className="grid h-8 w-8 place-items-center rounded-full text-[14px] font-extrabold" style={{ background: f.fill, color: f.ink }}>
                     {k < n ? "✓" : k + 1}
                   </span>
@@ -165,29 +189,39 @@ export default function ScoopStacker() {
             </ol>
           </div>
 
-          {/* centre: the stack */}
-          <div ref={stackRef} className="relative mx-auto h-[calc(var(--u)*4.3)] w-[calc(var(--u)*1.35)] [--u:min(11.5svh,104px)] lg:[--u:min(14.5vh,150px)]">
-            <div aria-hidden className="absolute bottom-[-4%] left-1/2 h-[6%] w-[90%] -translate-x-1/2 rounded-[50%] bg-[#2b1233]/10 blur-md" />
-            <img src={builder.cone} alt="Waffle cone" className="absolute bottom-0 left-1/2 z-[1] w-[calc(var(--u))] -translate-x-1/2" />
-            {scoops.map((f, k) => (
-              <div
-                key={f.id}
-                ref={(el) => {
-                  drops.current[k] = el;
-                }}
-                className="absolute left-0 w-full"
-                style={{ bottom: `calc(var(--u) * ${1.55 + k * 0.72})`, zIndex: 10 + k }}
-              >
-                <img
+          <div className="relative mx-auto flex justify-center items-center">
+            <div ref={stackRef} className={`relative w-[calc(var(--u)*1.35)] ${isCake ? 'h-[calc(var(--u)*2.5)] [--u:min(21svh,190px)] lg:[--u:min(27vh,295px)]' : 'h-[calc(var(--u)*4.3)] [--u:min(11.5svh,104px)] lg:[--u:min(14.5vh,150px)]'}`}>
+              <div aria-hidden className={`absolute left-1/2 -translate-x-1/2 rounded-[50%] ${isCake ? 'bottom-[-6%] h-[12%] w-[150%] bg-black/15 blur-[12px]' : 'bottom-[-4%] h-[6%] w-[90%] bg-[#2b1233]/20 blur-lg'}`} />
+              <img src={builder.cone} alt="Waffle cone" className={`absolute bottom-0 left-1/2 z-[1] -translate-x-1/2 ${isCake ? "w-[calc(var(--u)*1.8)]" : "w-[calc(var(--u))]"}`} />
+              {scoops.map((f, k) => (
+                <div
+                  key={`${f.id}-${k}`}
                   ref={(el) => {
-                    squish.current[k] = el;
+                    drops.current[k] = el;
                   }}
-                  src={f.image}
-                  alt={`${f.name} scoop`}
-                  className="w-full origin-bottom drop-shadow-[0_10px_10px_rgba(60,10,30,.18)]"
-                />
-              </div>
-            ))}
+                  className="absolute"
+                  style={{
+                    bottom: isCake ? `calc(var(--u) * ${[0.30, 0.90, 1.41][k]})` : `calc(var(--u) * ${1.55 + k * 0.72})`,
+                    zIndex: 10 + k,
+                    width: isCake ? `${100 - k * 15}%` : '100%',
+                    left: isCake ? `${k * 7.5}%` : '0',
+                  }}
+                >
+                  <div
+                    ref={(el) => {
+                      squish.current[k] = el;
+                    }}
+                    className="w-full origin-bottom"
+                  >
+                    <img
+                      src={f.image}
+                      alt={`${f.name} scoop`}
+                      className={`w-full origin-bottom ${!isCake ? 'transition-transform duration-300 hover:-translate-y-3 cursor-pointer drop-shadow-[0_10px_10px_rgba(60,10,30,.18)]' : ''}`}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* right: the receipt */}
@@ -222,13 +256,12 @@ export default function ScoopStacker() {
                 Add scoops to see them here
               </a>
             ) : (
-              <button 
-                onClick={handleBuy} 
-                className={`btn mt-3 w-full justify-center flex items-center gap-2 lg:mt-5 transition-all duration-300 ease-out ${
-                  done && !buying && !delivered 
-                    ? "btn-solid hover:-translate-y-1 hover:shadow-lg cursor-pointer" 
+              <button
+                onClick={handleBuy}
+                className={`btn mt-3 w-full justify-center flex items-center gap-2 lg:mt-5 transition-all duration-300 ease-out ${done && !buying && !delivered
+                    ? "btn-solid hover:-translate-y-1 hover:shadow-lg cursor-pointer"
                     : "btn-outline opacity-80 cursor-not-allowed"
-                }`}
+                  }`}
                 disabled={!done || buying || delivered}
               >
                 {delivered ? (
